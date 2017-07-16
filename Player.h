@@ -4,8 +4,8 @@
 
 class Player {
 	
-	Board board;
-	String name;
+	const Board board*;
+	const String name;
 	int MP; //magic
 	int HP; //health
 	vector<Card*> hand; //cards currently in hand
@@ -27,12 +27,18 @@ public:
     // use minion's ability on the target (target does not need to be specified)
     void use(Minion *minion, Target *target);
 
+    // intialize the player's deck
+    void initDeck(string filename);
+
+    // shuffle the player's deck
+    void shuffleDeck();
+
     // get my board: currently played cards
 	vector<Card*> getMyBoard();
 
 	// get enemy currently played cards
 	vector<Card*> getEnemyBoard();
 
-	Player();
+	Player(string name, Board *board);
 	~Player();
 };
