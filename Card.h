@@ -10,9 +10,9 @@ class Card { // abstract class
 
 public:
 
-	virtual ~Expr();
+	virtual ~Card();
 	enum cardType {Minion = 0, Spell, Enchantment, Ritual}
-	cardType getType();	 
+	virtual cardType getType()=0;	 
 
 };
 
