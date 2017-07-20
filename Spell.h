@@ -1,12 +1,18 @@
+#ifndef _SPELL_
+#define _SPELL_
+#include "Card.h"
 #include <vector>
 #include <string>
+#include <memory>
 
 class Spell: public Card { //abstract
 	
 public:
 
 	// cast spell, may or may not have a target
-	virtual void cast(Target *target); 
+	virtual void cast(Card *card); 
 
-	virtual ~Spel();
+	virtual ~Spell();
 };
+
+#endif

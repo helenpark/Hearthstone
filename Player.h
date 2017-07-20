@@ -1,19 +1,28 @@
-
+#ifndef _PLAYER_
+#define _PLAYER_
+#include "Board.h"
+#include "Deck.h"
+#include "Grave.h"
 #include <vector>
 #include <string>
+#include <memory>
 
 class Player {
 	
-	const Board *board;
-	const String name;
+	Board &board;
+	const std::string name;
+	const int number;
+	const int oppNumber;
+	Player *opponent;
 	bool firstTurn = true;
 	int MP; //magic
 	int HP; //health
-	vector<Card*> hand; //cards currently in hand
+	std::vector<std::shared_ptr<Card>> hand; //cards currently in hand
 	Deck *playerDeck; 
 	Grave *playerGrave; 
-	vector<Card*> cardsPlayed; //cards active on the board playing field
-	Ritual *ritual;
+	std::vector<std::shared_ptr<Card>> MinionsPlayed; //cards active on the board playing field
+	// ritual played for this player
+	std::shared_ptr<Ritual> ritualPlayed;
 
 public:
     
@@ -48,17 +57,24 @@ public:
     void displayHand();
 
     // intialize the player's deck
-    void initDeck(string filename);
+    void initDeck(std::string filename);
 
     // Start of the turn
     void turnStart(); 
 
+    // checks if the player's HP is 0
+    bool isDead();
+
+    // sets the opponent of the player
+    void setOpponent(Player *opp);
+
     // get my board: currently played cards
-	vector<Card*> getMyBoard();
+	std::vector<Card*> getMyBoard();
 
 	// get enemy currently played cards
-	vector<Card*> getEnemyBoard();
+	std::vector<Card*> getEnemyBoard();
 
-	Player(string name, Board *board);
+	Player(int num, int oppNum,  std::string name, Board &board);
 	~Player();
 };
+#endif

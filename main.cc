@@ -21,13 +21,18 @@ int main(int argc, char *argv[]) {
 	// get the names of the players
 	cout << "Name of player 1: ";
 	cin >> cmd;
-	Player player1{cmd, board};
+	Player player1{1, 2, cmd, board};
 	cout << endl;
 
 	cout << "Name of player 2: ";
 	cin >> cmd;
-	Player player2{cmd, board};
-	
+	Player player2{2, 1, cmd, board};
+
+	// sets the opponent for each player
+	player1.setOpponent(&player2);
+	player2.setOpponent(&player1);
+
+	// sets player 1 as the first player to play	
 	Player *playerTurn = &Player1;
 	
 	// executing the arguements provided to main	
@@ -68,7 +73,6 @@ int main(int argc, char *argv[]) {
 		// if it's the first turn
 		if (!first1 || !first2) {
 			playerTurn->turnStart();
-			first1 = false;
 		}
 		// when the player ends their turn
 		if (cmd.rfind("end") != string::nopos) {
@@ -198,7 +202,10 @@ int main(int argc, char *argv[]) {
 			}
 		}
 		// checks if the game ended yet or not
-		if (board.gameEnded();) {
+		if (player1.isDead()) {
+			return 0;
+		} 
+		if (player2.isDead()) {
 			return 0;
 		}
 	}	

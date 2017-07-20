@@ -1,19 +1,23 @@
+#ifndef _CARD_
+#define _CARD_
 #include <vector>
 #include <string>
+#include <memory>
 
 class Card { // abstract class
 	
-	string name;
+	std::string name;
 	int cost;
-	string description;
-	Player *Owner;
+	std::string description;
 
 public:
 
-	virtual ~Expr();
-	enum cardType {Minion = 0, Spell, Enchantment, Ritual}
-	cardType getType();	 
+	virtual ~Card();
+	enum cardType {Minion = 0, Spell, Enchantment, Ritual};
+	Card::cardType getType();	 
 
 };
 
 std::ostream &operator<<(std::ostream &out, const Card &c);
+
+#endif

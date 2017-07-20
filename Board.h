@@ -1,24 +1,38 @@
-
+#ifndef _BOARD__
+#define _BOARD_
+#include "Minion.h"
+#include "Ritual.h"
 #include <vector>
 #include <string>
+#include <memory>
 
 class Board {
-	
-	Player *player1;
-	Player *player2;
-
-	Minion *deadMinion; //top of the graveyard)
+	Minion *deadMinion; //top of the graveyard
 	Ritual *ritual;  // Ritual Pointer (that is on the board)
- 	vector <minion*> onBoard; // a vector of maximum size of five that keeps track of the minions on the board 
-	vector <minion*> player1Minions // player 1's cards
+ 	std::vector <std::shared_ptr<typename Minion>> onBoard; // a std::vector of maximum size of five that keeps track of the minions on the board 
+	std::vector <std::shared_ptr<typename Minion>> player1Minions // player 1's cards
 	Ritaul *player1Ritual; // player 1's ritual
-	vector <minion*> player2Minions // player 2's minions
+	std::vector <std::shared_ptr<typename Minion>> player2Minions // player 2's minions
 	Ritual *player2Ritual; // player 2's ritual
 
 public:
-	void gameStart(); // asks for the player's names, shuffles the decks
-	bool gameEnded(); // checks if someone won or lost
-	Card getTarget(int p, int t); // retrieves the given card needed
+	Card* getTarget(int p, int t); // retrieves the given card needed
+	// inspects the card from the current active player
+	void inspect(int i, int player);
+	// places the minion on the active player's board
+	void placeMinion(Minion *minion, int player);
+	// places the ritual card on the active player's board
+	void placeRitual(Ritual *ritual, int player);
+	// plays the spell card with no specific target
+	void playSpell(Spell *spell);
+	// plays the spell card with a specific target
+	void playSpell(Spell *spell, Card *target);
+	// places the enchantment on the targeted minion
+	void playEnchantment(Enchantment *enchant, Minion *minion);
+	// minion attacks the specified target
+	void attack(
 };
 
 std::ostream &operator<<(std::ostream &out, const Board &b);
+
+#endif

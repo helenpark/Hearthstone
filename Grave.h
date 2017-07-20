@@ -1,9 +1,13 @@
+#ifndef _GRAVE_
+#define _GRAVE_
+#include "Card.h"
 #include <vector>
 #include <string>
+#include <memory>
 
 class Grave {
 	
-	vector<Card*> graveyard;
+	std::vector<std::shared_ptr<Card>> graveyard;
 
 public:
 	
@@ -11,7 +15,7 @@ public:
     Card* resurect();
 
     // return top Minion from Grave
-    &Minion topMinion();
+    Card* topMinion();
 
     Grave();
     ~Grave();
@@ -19,3 +23,5 @@ public:
 };
 
 std::ostream &operator<<(std::ostream &out, const Grave &g);
+
+#endif

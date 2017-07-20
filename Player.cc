@@ -6,23 +6,24 @@
 
 using namespace std;
 
-Player::Player(string name, Board board*): name(name), board(board), MP(3), HP(20)
+Player::Player(int num, int oppNum,  string name, Board &board): number(num), oppNumber(oppNum, name(name), board(board), MP(3), HP(20)
 {
 	// game starts, add 4 cards to the player's hand
 	for (int i = 0; i < 4; i++) {
-		hand.emplace_back(Deck.back());
-		Deck.pop_back();
+		hand.emplace_back(Deck.drawCard());
 	}					  
 }
 
 void Player::placeCard(int i) {
 	// if its a minion
 	if (hand[i].getType() == Card::Minion) {
-		board.placeMinion(hand[i]);
+		board.placeMinion(hand[i], number);
+		MinionsPlayed.emplace_back(hand[i]);
 	}
 	// if its a ritual type
 	if (hand[i].getType() == Card::Ritual) {
-		board.placeRitual(hand[i]);
+		board.placeRitual(hand[i], number);
+		ritualPlayed = hand[i];
 	}
 	// if its a Spell
 	if (hand[i].getType() == Card::Spell) {
@@ -31,7 +32,7 @@ void Player::placeCard(int i) {
 }
 
 void Player::placeCard(int i, int p, int t) {
-	Card *target = getTarget(int p, int t);
+	Card *target = board.getTarget(p, t);
 
 	// if its a spell
 	if (hand[i].getType() == Card::Spell) {
@@ -44,18 +45,69 @@ void Player::placeCard(int i, int p, int t) {
 }
 
 void Player::drawCard() {
-	if (hand.size() == 5 || Deck.isEmpty()) {
+	if (hand.size() == 5 || playerDeck->isEmpty()) {
 		return;
 	}	
-	hand.emplace_back(Deck.draw());	
+	hand.emplace_back(playerDeck->drawCard());	
 }
 
 void Player::discardCard(int i) {
 	if (hand.empty()) {
 		return;
 	}
-	hand.erase(i);
+	const int temp = i;
+	hand.erase(temp);
 }
 
+void Player::attack(int i, int j) {
+	Card *target = board.getTarget(oppNum, j);
 
+	attacker.attack(target);
+}
 
+void Player::attack(int i) {
+	Card *attacker = board.getTarget(number, i);
+	
+	attacker.attack(opponent);
+}
+
+void Player::use(int i, int p, int t) {
+	Card *target = Board.getTarget(p, t);
+	Card *attacker = Board.getTarget(number, i);
+
+	// execute the function from minion that would use the ability
+	
+}
+
+void Player::use(int i) {
+	board.use(i, number);
+}
+
+void Player::inspect(int i) {
+	board.inspect(i, number);
+}
+
+void Player::displayHand() {};
+
+void Player::initDeck(string filename) {
+	playerDeck.initDeck(filename);	
+}
+
+void Player::turnStart() {
+	MP++;
+
+	if (hand.size() != 5 || !playerDeck->isEmpty()) {
+		drawCard();	
+	}			
+}
+
+bool Player::isDead() {
+	if (HP) {
+		return true;
+	}
+	return false;
+}
+
+void Player::setOpponent(Player *opp) {
+	opponent = opp; 
+}
