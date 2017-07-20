@@ -11,11 +11,11 @@ class Grave {
 
 public:
 	
-	// revive top card from the Grave, return card in it's original state
+    // revive top card from the Grave, return card in it's original state
     Card* resurect();
 
-    // return top Minion from Grave
-    Card* topMinion();
+    // when the minion dies, place it on the top of the graveyard
+    void died(Card *minion);
 
     Grave();
     ~Grave();

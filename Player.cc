@@ -6,7 +6,7 @@
 
 using namespace std;
 
-Player::Player(int num, int oppNum,  string name, Board &board): number(num), oppNumber(oppNum, name(name), board(board), MP(3), HP(20)
+Player::Player(int num, int oppNum,  string name, Board &board): number(num), oppNumber(oppNum), name(name), board(board), MP(3), HP(20)
 {
 	// game starts, add 4 cards to the player's hand
 	for (int i = 0; i < 4; i++) {
