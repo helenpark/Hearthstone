@@ -16,7 +16,7 @@ class Board {
 	Ritual *player2Ritual; // player 2's ritual
 
 public:
-	Card* getTarget(int p, int t); // retrieves the given card needed
+	Card* getTarget(int player, int target); // retrieves the given card needed
 	// inspects the card from the current active player
 	void inspect(int i, int player);
 	// places the minion on the active player's board
@@ -29,8 +29,6 @@ public:
 	void playSpell(Spell *spell, Card *target);
 	// places the enchantment on the targeted minion
 	void playEnchantment(Enchantment *enchant, Minion *minion);
-	// minion attacks the specified target
-	void attack(
 };
 
 std::ostream &operator<<(std::ostream &out, const Board &b);

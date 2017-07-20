@@ -61,26 +61,28 @@ void Player::discardCard(int i) {
 
 void Player::attack(int i, int j) {
 	Card *target = board.getTarget(oppNum, j);
-
-	attacker.attack(target);
+	
+	MinionsPlayed[i]->attack(target);
 }
 
 void Player::attack(int i) {
-	Card *attacker = board.getTarget(number, i);
+	// grab the amount of attack it does
+	int AP = MinionsPlayed[i]->attack(opponent);
+	// inflict that amount on to the opponent;
+	opponent.inflictDmg(AP);
 	
-	attacker.attack(opponent);
 }
 
 void Player::use(int i, int p, int t) {
 	Card *target = Board.getTarget(p, t);
-	Card *attacker = Board.getTarget(number, i);
 
 	// execute the function from minion that would use the ability
+	MinionsPlayed[i]->use(target);
 	
 }
 
 void Player::use(int i) {
-	board.use(i, number);
+	MinionsPlayed[i]->use();
 }
 
 void Player::inspect(int i) {
@@ -102,7 +104,7 @@ void Player::turnStart() {
 }
 
 bool Player::isDead() {
-	if (HP) {
+	if (HP == 0) {
 		return true;
 	}
 	return false;

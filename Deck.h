@@ -12,7 +12,7 @@ class Deck {
 public:
 	
 	// shuffle deck, randomize order of cards
-    std::vector<Card*>  shuffle(std::vector<Card*> cards);
+    std::vector<Card*>  shuffle();
 
     // drawCard from deck, return pointer to card drawn
     Card* drawCard();

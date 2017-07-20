@@ -19,6 +19,12 @@ public:
 	bool attack(Minion *minion);
 	// minion attacks the opponent, grab how much the minion can hit for
 	int attack();
+	// use minions ability
+	void use();
+	// use minions ability on target minion
+	void use(Minion *minion);
+	// adds an enchantment on to the minion
+	void addBuff(Enchantment *enchant);
 	// use the minions	
 	virtual ~Minion();
 
