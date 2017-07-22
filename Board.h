@@ -2,6 +2,7 @@
 #define _BOARD_
 #include "Minion.h"
 #include "Ritual.h"
+#include "Spell.h"
 #include <vector>
 #include <string>
 #include <memory>
@@ -11,9 +12,13 @@ class Board {
 	Ritual *ritual;  // Ritual Pointer (that is on the board)
  	std::vector <std::shared_ptr<typename Minion>> onBoard; // a std::vector of maximum size of five that keeps track of the minions on the board 
 	std::vector <std::shared_ptr<typename Minion>> player1Minions // player 1's cards
-	Ritaul *player1Ritual; // player 1's ritual
+	Ritual *player1Ritual; // player 1's ritual
+	Deck *player1Deck;
+	Grave *player1Grave;
 	std::vector <std::shared_ptr<typename Minion>> player2Minions // player 2's minions
 	Ritual *player2Ritual; // player 2's ritual
+	Deck *player2Deck;
+	Grave *player2Grave;
 
 public:
 	Card* getTarget(int player, int target); // retrieves the given card needed
@@ -29,6 +34,12 @@ public:
 	void playSpell(Spell *spell, Card *target);
 	// places the enchantment on the targeted minion
 	void playEnchantment(Enchantment *enchant, Minion *minion);
+	// sets the deck for whichever player
+	void setDeck(Deck *deck, int player);
+	// sets the Grave for whichever player
+	void setGrave(Grave *grave, int player); 
+	// activates any ability that triggers when a minion enters play
+	void minionPlayed(Minion *minion);
 };
 
 std::ostream &operator<<(std::ostream &out, const Board &b);

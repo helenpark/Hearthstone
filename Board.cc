@@ -52,15 +52,31 @@ void Board::placeRitual(Ritual *ritual, int player) {
 }
 
 void Board::playSpell(Spell *spell) {
-	spell.cast();
+	spell.cast(this);
 }
 
 void Board::playSpell(Spell *spell, Card *target) {
-	spell.cast(target);
+	spell.cast(this, target);
 }
 
 void Board::playEnchantment(Enchantment *enchant, Minion *minion) {
 	minion.addBuff(enchant);
 }	
+
+void Board::setDeck(Deck *deck, int player) {
+	if (player == 1) {
+		player1Deck = deck;
+	} else {
+		player2Deck = deck;
+	}
+}
+
+void Board::setGrave(Grave *grave, int player) {
+	if (player == 1) {
+		player1Grave = grave;
+	} else {
+		player2Grave = grave;
+	}
+}
 
 std::ostream &operator<<(std::ostream &out, const Board &b){}

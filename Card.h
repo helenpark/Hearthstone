@@ -11,7 +11,7 @@ class Card { // abstract class
 	std::string description;
 
 public:
-
+	virtual getName();
 	virtual ~Card();
 	enum cardType {Minion = 0, Spell, Enchantment, Ritual};
 	Card::cardType getType();	 

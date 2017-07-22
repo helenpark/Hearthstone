@@ -10,7 +10,8 @@ class Enchantment: public Card { //abstract
 	Card *minion;
 
 public:
-
+	
+	virtual void enchant(Card *card);
 	virtual ~Enchantment();
 
 };

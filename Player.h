@@ -3,6 +3,7 @@
 #include "Board.h"
 #include "Deck.h"
 #include "Grave.h"
+#include "Ritual.h"
 #include <vector>
 #include <string>
 #include <memory>
@@ -67,6 +68,24 @@ public:
 
     // sets the opponent of the player
     void setOpponent(Player *opp);
+
+    // the player takes damage from whatever source
+    void takeDmg(int dmg);
+
+    // the player uses his magic
+    void useMP(int mp);
+
+    // use the ability trigger when a minion dies
+    void minionDied();
+
+    // ability when they are played
+    void minionPlayed();
+
+    // ability when the turn starts
+    void turnStart();
+
+    // ability when the turn ends
+    void turnEnd();
 
     // get my board: currently played cards
 	std::vector<Card*> getMyBoard();

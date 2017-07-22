@@ -13,9 +13,10 @@ int main(int argc, char *argv[]) {
 	bool deck2 = false;
 	bool testing = false;
 	bool init = false;
-	// flags for the first turn 
-	bool first1 = true;
-	bool first2 = true;
+	// flag for the first turn 
+	bool first = true;
+	bool start = false;
+	// for trigger abilities
 	ifstream initFile;
 	
 	// get the names of the players
@@ -71,17 +72,18 @@ int main(int argc, char *argv[]) {
 	// recieve commands until the end of the game;
 	while (getline(cin, cmd)) {
 		// if it's the first turn
-		if (!first1 || !first2) {
+		if (!first && start) {
 			playerTurn->turnStart();
 		}
 		// when the player ends their turn
 		if (cmd.rfind("end") != string::nopos) {
 			if (playerTurn == &player1) {
 				playerTurn = &player2;
-				first1 = false;
+				first = false;
+				start = true;
 			} else {
 				playerTurn = &player1;
-				first2 = false; 
+				start = true;
 			}
 		}
 		// when the player attacks with a minion
@@ -138,7 +140,7 @@ int main(int argc, char *argv[]) {
 			}
 			// when playing a card that has a universal affect
 			if (p == -1 && t == -1) {
-				playerTurn->placeCard(int i);	
+				minionPlayed = playerTurn->placeCard(int i);	
 			}
 			// when playing a card with a targeted ability 
 			else {
@@ -208,5 +210,7 @@ int main(int argc, char *argv[]) {
 		if (player2.isDead()) {
 			return 0;
 		}
+		// after the player's first move, the turn has already started, dont need the player reaping in the start benefits twice
+		start = false;
 	}	
 }

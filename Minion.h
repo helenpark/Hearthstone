@@ -7,6 +7,10 @@
 #include <string>
 #include <memory>
 
+// forward declaration, make sure to #include "Minion.h" and "Player.h" in the .cc file
+class Board;
+class Player;
+
 class Minion: public Card { //abstract
 
 	int AP; //attack points
@@ -16,15 +20,15 @@ class Minion: public Card { //abstract
 
 public:
 	// use minion to attack, return true if minion dies after attack, false if minion lives after attack
-	bool attack(Minion *minion);
+	virtual bool attack(Minion *minion) = 0;
 	// minion attacks the opponent, grab how much the minion can hit for
-	int attack();
-	// use minions ability
-	void use();
-	// use minions ability on target minion
-	void use(Minion *minion);
+	virtual int attack(Player *player) = 0;
+	// use minions ability (feed in all possible parameters to make life easy)
+	virtual void use(Board *board, player *player, Minion *minion) = 0;
 	// adds an enchantment on to the minion
-	void addBuff(Enchantment *enchant);
+	virtual void addBuff(Enchantment *enchant) = 0;
+	// gets the ability type
+	virtual Ability::AbilityType getType();
 	// use the minions	
 	virtual ~Minion();
 
