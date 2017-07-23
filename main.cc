@@ -1,6 +1,3 @@
-
-
-
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -13,6 +10,9 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
+    // TODO: delete, this is testing purposes
+
+    cout << "GAME START: \n"
     string cmd;
 
 
