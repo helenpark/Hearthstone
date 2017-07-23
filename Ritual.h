@@ -1,23 +1,26 @@
-#ifndef __RITUAL_H__
-#define __RITUAL_H__
+#ifndef _RITUAL_
+#define _RITUAL_
+#include "Card.h"
+#include "Ability.h"
+#include "Minion.h"
 #include <vector>
 #include <string>
-#include "Card.h"
-using namespace std;
+#include <memory>
+
+// forward declaration, make sure to #include "Board.h" and #include "Player.h" in the .cc files
+class Player;
+class Board;
+
 class Ritual: public Card { //abstract
 
-	//Ability *ability;
-	int activationCost;
+	Ability *ability;
 	int charges;
 
 public:
-    Ritual(string name, int cost, string description, int p,
-      int activationCost, int charges);
-
-
-    bool canActivate();
-  //  virtual void useAbility(Target *t=nullptr)=0;
+	virtual void activate(std::shared_ptr<Minion> minion);
+	virtual void activate(Player *player);
 	virtual ~Ritual();
 
 };
+
 #endif
