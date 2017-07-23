@@ -1,64 +1,49 @@
 
+#ifndef _PLAYER_H__
+#define _PLAYER_H__
+//#include "Board.h"
+#include "Deck.h"
+//#include "Grave.h"
+//#include "Ritual.h"
 #include <vector>
 #include <string>
+#include <memory>
+using namespace std;
 
 class Player {
-	
-	const Board *board;
-	const String name;
-	bool firstTurn = true;
-	int MP; //magic
-	int HP; //health
-	vector<Card*> hand; //cards currently in hand
-	Deck *playerDeck; 
-	Grave *playerGrave; 
-	vector<Card*> cardsPlayed; //cards active on the board playing field
-	Ritual *ritual;
+
+    int num; //player1 or player2
+    string name;
+    shared_ptr<Deck> myDeck;
+    vector<shared_ptr<Card>> myHand; //4 cards
+    vector<shared_ptr<Card>> played;
+    int HP = 20;  //20 lives
+    int MP = 3;   //3 magics
+
+    //board
+    //graveyard
 
 public:
-    
-    // place card on the playing field 
-    void placeCard(int i);
+    Player();
+	Player(std::string name, int n);
 
-    // place a card with a targeted ability
-    void placeCard(int i, int p, int t);
-
-    // draw from the player's deck
-    void drawCard();
-    
-    // discard card, removing from hand and placing into player grave
-    void discardCard(int i);
-
-    // trigger attack method of the selected card on target 
-    void attack(int i, int j);
-
-    // trigger attack method on the opponent
-    void attack(int i);
-
-    // use minion's ability on the target (target does not need to be specified)
-    void use(int i, int p, int t);
-
-    // use minion's ability with no specified target
-    void use(int i);
-
-    // inspect the player's minion
-    void inspect(int i);
-
-    // displays the player's hand
-    void displayHand();
-
-    // intialize the player's deck
-    void initDeck(string filename);
-
-    // Start of the turn
-    void turnStart(); 
-
-    // get my board: currently played cards
-	vector<Card*> getMyBoard();
-
-	// get enemy currently played cards
-	vector<Card*> getEnemyBoard();
-
-	Player(string name, Board *board);
+	//copy ctor
+    Player (const Player &other);
+    //move ctor
+    Player (Player &&other);
+    //copy assignment operator
+    Player &operator=(const Player &other);
+    //move assignment operator
+    Player &operator=(Player &&other);
+	 //dtor
 	~Player();
+
+	// draw from the player's deck
+    void drawCard();
+    // gain 1 magic
+    void gainMagic();
+    // discard card
+    void discard(int i);
+
 };
+#endif

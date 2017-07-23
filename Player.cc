@@ -1,61 +1,93 @@
+
+
 #include "Player.h"
-#include "Card.h"
+//#include "Card.h"
+//#include "Ability.h"
 #include <iostream>
 #include <vector>
 #include <string>
+#include <exception>
 
 using namespace std;
 
-Player::Player(string name, Board board*): name(name), board(board), MP(3), HP(20)
-{
-	// game starts, add 4 cards to the player's hand
-	for (int i = 0; i < 4; i++) {
-		hand.emplace_back(Deck.back());
-		Deck.pop_back();
-	}					  
+bool testing = true;
+
+Player::Player(string name,int n): name(name), num{n} {
+
+    myDeck = make_shared<Deck> (num);
 }
 
-void Player::placeCard(int i) {
-	// if its a minion
-	if (hand[i].getType() == Card::Minion) {
-		board.placeMinion(hand[i]);
-	}
-	// if its a ritual type
-	if (hand[i].getType() == Card::Ritual) {
-		board.placeRitual(hand[i]);
-	}
-	// if its a Spell
-	if (hand[i].getType() == Card::Spell) {
-		board.playSpell(hand[i]);
-	}
+Player::Player() {
+    num = 2;
+    name = "Boss";
+    myDeck = make_shared<Deck> (2);
 }
 
-void Player::placeCard(int i, int p, int t) {
-	Card *target = getTarget(int p, int t);
-
-	// if its a spell
-	if (hand[i].getType() == Card::Spell) {
-		board.playSpell(hand[i], target);
-	}
-	// if its an enchantment card
-	if (hand[i].getType() == Card::Enchantment) {
-		board.playEnchantment(hand[i], target);
-	}
+//copy ctor
+Player::Player (const Player &other): name{other.name},num{other.num}{
+    //myDeck = make_shared<Deck> ();
+    cout << "copy ctor called" << endl;
 }
 
-void Player::drawCard() {
-	if (hand.size() == 5 || Deck.isEmpty()) {
-		return;
-	}	
-	hand.emplace_back(Deck.draw());	
+//move ctor
+Player::Player (Player &&other): name{other.name},num{other.num}{
+    //myDeck = make_shared<Deck> ();
+    cout << "move ctor called" << endl;
+
 }
 
-void Player::discardCard(int i) {
-	if (hand.empty()) {
-		return;
-	}
-	hand.erase(i);
+//copy assignment operator
+Player& Player::operator=(const Player &other){
+    cout << "copy assign called" << endl;
+
+        name = other.name;
+        num = other.num;
+        return *this;
 }
 
+    //move assignment operator
+Player& Player::operator=(Player &&other){
+        //delete my own....
+cout << "move assign called" << endl;
+
+        //other. = nullptr
+        name = other.name;
+        num = other.num;
+        return *this;
+    }
+
+     //dtor
+Player::~Player(){}
 
 
+void Player::drawCard(){
+     if (myHand.size()!=5){
+         try {
+            myHand.emplace_back(myDeck->draw());
+            int len = myHand.size();
+            cout << "This is hand:" << len << " "<< endl;
+            cout << *myHand[len-1];
+         } catch(string s) {
+             cout << s << endl;
+         }
+     }
+     else {
+        cout <<"Your hand is full! You already have 5 cards!"<< endl;
+     }
+
+}
+
+void Player::gainMagic(){
+    ++MP;
+    cout<< "Player " <<name<< " num: " <<num<< " has magic: " << MP<<endl;
+}
+
+void Player::discard(int i){
+    if (myHand.empty()|| i<0 || i>=myHand.size()) {
+        cout << "Can't give away something you don't have, try something else" << endl;
+    }
+    else {
+        myHand.erase(myHand.begin()+i);
+        cout << "now you only have " << myHand.size() << " left\n";
+    }
+}
