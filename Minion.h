@@ -1,8 +1,8 @@
 #ifndef _MINION_
 #define _MINION_
 #include "Card.h"
-#include "Enchantment.h"
 #include "Ability.h"
+#include "Enchantment.h"
 #include <vector>
 #include <string>
 #include <memory>
@@ -12,23 +12,23 @@ class Board;
 class Player;
 
 class Minion: public Card { //abstract
-
+	
 	int AP; //attack points
 	int DP; //defense points
-	std::vector<typename std::shared_ptr<typename Enchantment>> buffs; // enchantments applied to minion
+	std::vector< std::shared_ptr<Enchantment> > buffs; // enchantments applied to minion
 	Ability *ability;
 
 public:
 	// use minion to attack, return true if minion dies after attack, false if minion lives after attack
-	virtual bool attack(Minion *minion) = 0;
+	virtual bool attack(std::shared_ptr<Minion>minion) = 0;
 	// minion attacks the opponent, grab how much the minion can hit for
 	virtual int attack(Player *player) = 0;
 	// use minions ability (feed in all possible parameters to make life easy)
-	virtual void use(Board *board, player *player, Minion *minion) = 0;
+	virtual void use(Board *board, Player *player, std::shared_ptr<Minion> minion) = 0;
 	// adds an enchantment on to the minion
-	virtual void addBuff(Enchantment *enchant) = 0;
+	virtual void addBuff(std::shared_ptr<Enchantment> enchant) = 0;
 	// gets the ability type
-	virtual Ability::AbilityType getType();
+	virtual Ability::AbilityType getAbilityType();
 	// use the minions	
 	virtual ~Minion();
 

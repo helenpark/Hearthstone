@@ -4,6 +4,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <memory>
 
 using namespace std;
 
@@ -11,47 +12,44 @@ Player::Player(int num, int oppNum,  string name, Board &board): number(num), op
 {
 	// game starts, add 4 cards to the player's hand
 	for (int i = 0; i < 4; i++) {
-		hand.emplace_back(Deck.drawCard());
+		hand.emplace_back(playerDeck->drawCard());
 	}					  
 }
 
-Card *Player::placeCard(int i) {
-	shared_ptr<Card> temp = hand[i];
+void Player::placeCard(int i) {
 	// if its a minion
-	if (hand[i].getType() == Card::Minion) {
-		board.placeMinion(hand[i], number);
-		MinionsPlayed.emplace_back(hand[i]);
-		hand.erase(i);
-		minionPlayed(temp);		
-		return temp;
+	if (hand[i]->getType() == Card::minion) {
+		board.placeMinion(static_pointer_cast<Minion>(hand[i]), number);
+		MinionsPlayed.emplace_back(static_pointer_cast<Minion>(hand[i]));
+		minionPlayed(static_pointer_cast<Minion>(hand[i]));
+		hand.erase(hand.begin() + (i - 1));
 	}
 	// if its a ritual type
-	if (hand[i].getType() == Card::Ritual) {
-		board.placeRitual(hand[i], number);
-		ritualPlayed = hand[i];
-		hand.erase(i);
-		return temp;
+	if (hand[i]->getType() == Card::ritual) {
+		board.placeRitual(static_pointer_cast<Ritual>(hand[i]), number);
+		ritualPlayed = static_pointer_cast<Ritual>(hand[i]);
+		hand.erase(hand.begin() + (i - 1));
 	}
 	// if its a Spell
-	if (hand[i].getType() == Card::Spell) {
-		board.playSpell(hand[i]);
-		hand.erase(i);
-		return temp;
+	if (hand[i]->getType() == Card::spell) {
+		board.playSpell(static_pointer_cast<Spell>(hand[i]));
+		hand.erase(hand.begin() + (i - 1));
 	}
 }
 
 void Player::placeCard(int i, int p, int t) {
-	Card *target = board.getTarget(p, t);
+	shared_ptr<Card> target = board.getTarget(p, t);
 
 	// if its a spell
-	if (hand[i].getType() == Card::Spell) {
-		board.playSpell(hand[i], target);
-		hand.erase(i);
+	if (hand[i]->getType() == Card::spell) {
+		board.playSpell(static_pointer_cast<Spell>(hand[i]), target);
+		hand.erase(hand.begin() + (i - 1));
 	}
 	// if its an enchantment card
-	if (hand[i].getType() == Card::Enchantment) {
-		board.playEnchantment(hand[i], target);
-		hand.erase(i);
+	if (hand[i]->getType() == Card::enchantment) {
+		
+		board.playEnchantment(static_pointer_cast<Enchantment>(hand[i]), target);
+		hand.erase(hand.begin() + (i - 1));
 	}
 }
 
@@ -68,16 +66,21 @@ void Player::discardCard(int i) {
 		cout << "Can't give away something you don't have, try something else" << endl;
 		return;
 	}
-	const int temp = i;
-	hand.erase(temp);
+	hand.erase(hand.begin() + (i - 1));
 }
 
 void Player::attack(int i, int j) {
-	Card *target = board.getTarget(oppNum, j);
-	
+	// for invalid entries
+	shared_ptr<Card> temp = board.getTarget(oppNumber, j);
+	// to check whether its actually attacking a minion or not
+	if (temp->getType() != Card::minion) {
+			cout << "Minions can only attack minions" << endl;
+			return;
+	}
+	shared_ptr<Minion> target = static_pointer_cast<Minion>(temp);
 	// if the minion died, trigger the ritual ability if present
 	if (MinionsPlayed[i]->attack(target)) {
-		opponent.minionDied();
+		opponent->minionDied();
 	}
 }
 
@@ -86,13 +89,18 @@ void Player::attack(int i) {
 }
 
 void Player::use(int i, int p, int t) {
-	Card *target = Board.getTarget(p, t);
+	shared_ptr<Card> temp = board.getTarget(p, t);
+	if (temp->getType() != Card::minion) {
+		cout << "You can only use abilites from minions" << endl;
+		return;
+	}
+	shared_ptr<Minion> target = static_pointer_cast<Minion>(temp);
 	// execute the function from minion that would use the ability
-	MinionsPlayed[i]->use(target);
+	MinionsPlayed[i]->use(&board, opponent, target);
 }
 
 void Player::use(int i) {
-	MinionsPlayed[i]->use(&board);
+	MinionsPlayed[i]->use(&board, this, static_pointer_cast<Minion>(MinionsPlayed[i]));
 }
 
 void Player::inspect(int i) {
@@ -102,16 +110,17 @@ void Player::inspect(int i) {
 void Player::displayHand() {};
 
 void Player::initDeck(string filename) {
-	playerDeck.initDeck(filename);	
+	playerDeck->initDeck(filename);	
 }
 
 void Player::turnStart() {
 	MP++;
 	if (hand.size() != 5 || !playerDeck->isEmpty()) {
-		drawCard();	
-	}
-	turnStart();
-				
+		hand.emplace_back(playerDeck->drawCard());	
+	}	
+	if (ritualPlayed->getName() == "Dark Ritual") {
+		ritualPlayed->activate(this);
+	}				
 }
 
 bool Player::isDead() {
@@ -135,43 +144,37 @@ void Player::useMP(int mp) {
 
 void Player::minionDied() {
 	for (int i = 0; i < MinionsPlayed.size(); i++) {
-		if (MinionsPlayed[i].getType() == Ability::MinionDeath) {
-			MinionsPlayed[i].use(board, opponent, MinionsPlayed[i]);
+		if (MinionsPlayed[i]->getAbilityType() == Ability::minionDeath) {
+			MinionsPlayed[i]->use(&board, opponent, static_pointer_cast<Minion>(MinionsPlayed[i]));
 		}
 	}
-	if (ritual.getName() == "Soul Harvest") {
-		ritual.activate(this);
+	if (ritualPlayed->getName() == "Soul Harvest") {
+		ritualPlayed->activate(this);
 	
 	}
 }
 
-void Player::turnStart() {
-	if (ritual.getName() == "Dark Ritual") {
-		ritual.activate(this);
-	}
-}
 
 void Player::turnEnd() {
 	// only case is Potion Seller
 	for (int i = 0; i < MinionsPlayed.size(); i++) {
-		if (MinionsPlayed[i].getType() == Ability::turnEnd()) {
-			MinionsPlayed[i].use(board, this, MinionsPlayed[i]);
+		if (MinionsPlayed[i]->getAbilityType() == Ability::endTurn) {
+			MinionsPlayed[i]->use(&board, this, static_pointer_cast<Minion>(MinionsPlayed[i]));
 		}
 	} 
 }
 
-void Player::minionPlayed(Minion *target){
+void Player::minionPlayed(shared_ptr<Minion> target){
 	// only case is Fire Elemental
-	for (int i = 0; i < MinionsPlayed(); i++) {
-		if (MinionsPlayed[i].getType() == Ability::minionBirth) {
-			MinionsPlayed[i].use(board, opponent, target);
+	for (int i = 0; i < MinionsPlayed.size(); i++) {
+		if (MinionsPlayed[i]->getAbilityType() == Ability::minionBirth) {
+			MinionsPlayed[i]->use(&board, opponent, target);
 		}
 	} 
-	if (ritual.getName() == "Aura of Power") {
-		ritual.activate(target, this);
+	if (ritualPlayed->getName() == "Aura of Power") {
+		ritualPlayed->activate(target);
 	}
-	if (ritual.getName() == "Standstill") {
-		ritual.activate(target, opponent);
+	if (ritualPlayed->getName() == "Standstill") {
+		ritualPlayed->activate(target);
 	}
 }
-

@@ -12,10 +12,10 @@ class Deck {
 public:
 	
 	// shuffle deck, randomize order of cards
-    std::vector<Card*>  shuffle();
+    std::vector<std::shared_ptr<Card>>  shuffle();
 
     // drawCard from deck, return pointer to card drawn
-    Card* drawCard();
+    std::shared_ptr<Card> drawCard();
 
     // whether deck contains any cards or not
     bool isEmpty();

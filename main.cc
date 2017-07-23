@@ -5,6 +5,14 @@
 #include "Player.h"
 using namespace std;
 
+bool invalidInput(int i) {
+	if ((i < 0 || i > 5) && i != 'r') {
+		cout << "needs to be a number between 1 to 5, or r for Ritual" << endl;
+		return true;
+	}
+	return false;
+}
+
 int main(int argc, char *argv[]) {	
 	string cmd;
 	Board board;	
@@ -102,10 +110,16 @@ int main(int argc, char *argv[]) {
 			}
 			// when attacking the opponent
 			if (j = -1) {
+				if (invalidInput(i)) {
+					continue;
+				}
 				playerTurn->attack(i);
 			}
 			// when attacking an opponent minion 
 			else {
+				if (invalidInput(i) && invalidInput(j)) {
+					continue;
+				}
 				playerTurn->attack(i, j);
 			}
 		}
@@ -140,10 +154,20 @@ int main(int argc, char *argv[]) {
 			}
 			// when playing a card that has a universal affect
 			if (p == -1 && t == -1) {
+				if (invalidInput(i)) {
+					continue;
+				}
 				minionPlayed = playerTurn->placeCard(int i);	
 			}
 			// when playing a card with a targeted ability 
 			else {
+				if (invalidInput(i) || invalidInput(t)) {
+					continue;
+				}
+				if (p != 1 && p != 2) {
+					cout << "the player needs to be either 1 or 2" << endl;
+					continue;
+				}
 				playerTurn ->placeCard(int i, int p, int t);
 			}
 		}
@@ -173,10 +197,20 @@ int main(int argc, char *argv[]) {
 			}
 			// when playing a card that has a universal affect
 			if (p == -1 && t == -1) {
+				if (invalidInput(i)) {
+					continue;
+				}
 				playerTurn->use(int i);	
 			}
 			// when playing a card with a targeted ability 
 			else {
+				if (invalidInput(i) || invalidInput(t)) {
+					continue;
+				}
+				if (p != 1 && p != 2) {
+					cout << "the player needs to be either 1 or 2" << endl;
+					continue;
+				}
 				playerTurn->use(int i, int p, int t);
 			}
 		}
@@ -184,6 +218,9 @@ int main(int argc, char *argv[]) {
 		if (cmd.rfind("inspect") != string::npos) {
 			pos = cmd.rfind("inspect") + 7;
 			int i = cmd.find_first_not_of(" ", pos);
+			if (invalidInput(i)) {
+				continue;
+			}
 			playerTurn->inspect(i);
 		}
 		// when the player displays their hand
@@ -200,7 +237,12 @@ int main(int argc, char *argv[]) {
 				playerTurn->draw();	
 			}	
 			if (cmd.rfind("discard") != string::npos) {
-				playerTurn->discard();
+				pos = cmd.rfind("discard") + 7;
+				int i = cmd.find_first_not_of(" ", pos);
+				if (invalidInput(i)) {
+					continue;
+				}
+				playerTurn->discard(i);
 			}
 		}
 		// checks if the game ended yet or not

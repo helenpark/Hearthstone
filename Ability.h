@@ -12,11 +12,11 @@ class Ability  {
 	
 	std::string description; //attack points
 	int cost; //defense points
+public:
+	virtual ~Ability();
 	// type of trigger
 	enum AbilityType { startTurn, endTurn, minionBirth, minionDeath, onPlay}; 
 
-public:
-	virtual ~Ability();
 
 };
 

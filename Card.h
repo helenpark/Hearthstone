@@ -11,10 +11,10 @@ class Card { // abstract class
 	std::string description;
 
 public:
-	virtual getName();
+	virtual std::string getName();
 	virtual ~Card();
-	enum cardType {Minion = 0, Spell, Enchantment, Ritual};
-	Card::cardType getType();	 
+	enum cardType {minion = 0, spell, enchantment, ritual};
+	virtual cardType getType();	 
 
 };
 

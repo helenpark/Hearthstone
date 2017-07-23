@@ -12,8 +12,8 @@ class Spell: public Card { //abstract
 	
 public:
 
-	// cast spell, may or may not have a target
-	virtual void cast(Board *board, Card *card); 
+	// cast spell on ritual
+	virtual void cast(Board *board, std::shared_ptr<Card> target);
 	// case spell, with no real target, casts in general
 	virtual void cast(Board *board);
 

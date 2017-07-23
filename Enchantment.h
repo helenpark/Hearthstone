@@ -12,7 +12,7 @@ class Enchantment: public Card { //abstract
 public:
 	
 	virtual void enchant(Card *card);
-	virtual ~Enchantment();
+	//virtual ~Enchantment();
 
 };
 

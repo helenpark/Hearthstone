@@ -17,8 +17,8 @@ class Ritual: public Card { //abstract
 	int charges;
 
 public:
-	virtual activate(Minion *minion);
-	virtual activate(Player *player);
+	virtual void activate(std::shared_ptr<Minion> minion);
+	virtual void activate(Player *player);
 	virtual ~Ritual();
 
 };

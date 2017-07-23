@@ -3,6 +3,7 @@
 #include "Board.h"
 #include "Deck.h"
 #include "Grave.h"
+#include "Minion.h"
 #include "Ritual.h"
 #include <vector>
 #include <string>
@@ -21,7 +22,7 @@ class Player {
 	std::vector<std::shared_ptr<Card>> hand; //cards currently in hand
 	Deck *playerDeck; 
 	Grave *playerGrave; 
-	std::vector<std::shared_ptr<Card>> MinionsPlayed; //cards active on the board playing field
+	std::vector<std::shared_ptr<Minion>> MinionsPlayed; //cards active on the board playing field
 	// ritual played for this player
 	std::shared_ptr<Ritual> ritualPlayed;
 
@@ -60,9 +61,6 @@ public:
     // intialize the player's deck
     void initDeck(std::string filename);
 
-    // Start of the turn
-    void turnStart(); 
-
     // checks if the player's HP is 0
     bool isDead();
 
@@ -79,7 +77,7 @@ public:
     void minionDied();
 
     // ability when they are played
-    void minionPlayed();
+    void minionPlayed(std::shared_ptr<Minion> target);
 
     // ability when the turn starts
     void turnStart();

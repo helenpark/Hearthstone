@@ -2,10 +2,11 @@
 #include <vector>
 #include <string>
 #include <iostream>
+#include <memory>
 
 using namespace std;
 
-Card *Board::getTarget(int player, int target) {
+shared_ptr<Card> Board::getTarget(int player, int target) {
 	// if it affects the ritual card
 	if (target == 'r') {
 		if (player == 1) {
@@ -25,42 +26,45 @@ Card *Board::getTarget(int player, int target) {
 
 void Board::inspect(int i, int player) {}
 
-void Board::placeMinion(Minion *minion, int player) {
+void Board::placeMinion(shared_ptr<Minion> minionPlay, int player) {
 	if (player == 1) {
 		if (player1Minions.size() == 5) {
 			cout << "Can't play anymore minions" << endl;
 			return;
 		} else {
-			player1Minions.emplace_back(minion);
+			player1Minions.emplace_back(minionplay);
 		}
-	} else {
-		if (player2Minions.size() == 5) {
+	} else { if (player2Minions.size() == 5) {
 			cout << "Can't play anymore minions" << endl;
 			return;
 		} else {
-			player2Minions.emplace_back(minion);
+			player2Minions.emplace_back(minionPlay);
 		}
 	}
 }
 
-void Board::placeRitual(Ritual *ritual, int player) {
+void Board::placeRitual(shared_ptr<Ritual> ritualPlay, int player) {
 	if (player == 1) {
-		player1Ritual = ritual;
+		player1Ritual = ritualPlay;
 	} else {
-		player2Ritual = ritual;
+		player2Ritual = ritualPlay;
 	}
 }
 
-void Board::playSpell(Spell *spell) {
-	spell.cast(this);
+void Board::playSpell(shared_ptr<Spell> spellPlay) {
+	spellPlay->cast(this);
 }
 
-void Board::playSpell(Spell *spell, Card *target) {
-	spell.cast(this, target);
+void Board::playSpell(shared_ptr<Spell> spellPlay, shared_ptr<Minion> target) {
+	spellPlay->cast(this, target);
 }
 
-void Board::playEnchantment(Enchantment *enchant, Minion *minion) {
-	minion.addBuff(enchant);
+void Board::playSpell(shared_ptr<Spell> spellPlay, shared_ptr<Ritual> target) {
+	spellPlay->cast(this, target);
+}
+
+void Board::playEnchantment(shared_ptr<Enchantment> enchant, shared_ptr<Minion> minion) {
+	minion->addBuff(enchant);
 }	
 
 void Board::setDeck(Deck *deck, int player) {

@@ -11,8 +11,8 @@ vector<Card*> Deck::shuffle(vector<Card*> cards) {
 	random_shuffle(base.begin(), base.end());
 }
 
-Card* Deck::drawCard() {
-	Card *temp = base.back();
+shared_ptr<Card> Deck::drawCard() {
+	shared_ptr<Card> temp = base.back();
 	base.pop_back();
 	return temp;
 }
