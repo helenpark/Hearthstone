@@ -1,23 +1,33 @@
-#ifndef _CARD_
-#define _CARD_
+
+#ifndef _CARD_H__
+#define _CARD_H__
 #include <vector>
 #include <string>
 #include <memory>
+#include <utility>
+class Player;
+
 
 class Card { // abstract class
-	
+
 	std::string name;
 	int cost;
+	std::string type;
 	std::string description;
+	int owner; //player1 or player2
 
 public:
-	virtual std::string getName();
-	virtual ~Card();
-	enum cardType {minion = 0, spell, enchantment, ritual};
-	virtual cardType getType();	 
+	Card(std::string name, int cost, std::string type,
+    std::string description,  int p);
+	std::string getName();  //what's this method for???
+	std::string getDescription();
+	std::string getType();
+	int getCost();
 
+	virtual ~Card()=0;
+    friend std::ostream &operator<<(std::ostream &out, const Card &b);
 };
 
-std::ostream &operator<<(std::ostream &out, const Card &c);
-
 #endif
+
+

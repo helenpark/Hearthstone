@@ -1,180 +1,93 @@
+
+
 #include "Player.h"
-#include "Card.h"
-#include "Ability.h"
+//#include "Card.h"
+//#include "Ability.h"
 #include <iostream>
 #include <vector>
 #include <string>
-#include <memory>
+#include <exception>
 
 using namespace std;
 
-Player::Player(int num, int oppNum,  string name, Board &board): number(num), oppNumber(oppNum), name(name), board(board), MP(3), HP(20)
-{
-	// game starts, add 4 cards to the player's hand
-	for (int i = 0; i < 4; i++) {
-		hand.emplace_back(playerDeck->drawCard());
-	}					  
+bool testing = true;
+
+Player::Player(string name,int n): name(name), num{n} {
+
+    myDeck = make_shared<Deck> (num);
 }
 
-void Player::placeCard(int i) {
-	// if its a minion
-	if (hand[i]->getType() == Card::minion) {
-		board.placeMinion(static_pointer_cast<Minion>(hand[i]), number);
-		MinionsPlayed.emplace_back(static_pointer_cast<Minion>(hand[i]));
-		minionPlayed(static_pointer_cast<Minion>(hand[i]));
-		hand.erase(hand.begin() + (i - 1));
-	}
-	// if its a ritual type
-	if (hand[i]->getType() == Card::ritual) {
-		board.placeRitual(static_pointer_cast<Ritual>(hand[i]), number);
-		ritualPlayed = static_pointer_cast<Ritual>(hand[i]);
-		hand.erase(hand.begin() + (i - 1));
-	}
-	// if its a Spell
-	if (hand[i]->getType() == Card::spell) {
-		board.playSpell(static_pointer_cast<Spell>(hand[i]));
-		hand.erase(hand.begin() + (i - 1));
-	}
+Player::Player() {
+    num = 2;
+    name = "Boss";
+    myDeck = make_shared<Deck> (2);
 }
 
-void Player::placeCard(int i, int p, int t) {
-	shared_ptr<Card> target = board.getTarget(p, t);
-
-	// if its a spell
-	if (hand[i]->getType() == Card::spell) {
-		board.playSpell(static_pointer_cast<Spell>(hand[i]), target);
-		hand.erase(hand.begin() + (i - 1));
-	}
-	// if its an enchantment card
-	if (hand[i]->getType() == Card::enchantment) {
-		
-		board.playEnchantment(static_pointer_cast<Enchantment>(hand[i]), target);
-		hand.erase(hand.begin() + (i - 1));
-	}
+//copy ctor
+Player::Player (const Player &other): name{other.name},num{other.num}{
+    //myDeck = make_shared<Deck> ();
+    cout << "copy ctor called" << endl;
 }
 
-void Player::drawCard() {
-	if (hand.size() == 5 || playerDeck->isEmpty()) {
-		cout << "Can't draw cards from an empty deck, try something else" << endl;
-		return;
-	}	
-	hand.emplace_back(playerDeck->drawCard());	
+//move ctor
+Player::Player (Player &&other): name{other.name},num{other.num}{
+    //myDeck = make_shared<Deck> ();
+    cout << "move ctor called" << endl;
+
 }
 
-void Player::discardCard(int i) {
-	if (hand.empty()) {
-		cout << "Can't give away something you don't have, try something else" << endl;
-		return;
-	}
-	hand.erase(hand.begin() + (i - 1));
+//copy assignment operator
+Player& Player::operator=(const Player &other){
+    cout << "copy assign called" << endl;
+
+        name = other.name;
+        num = other.num;
+        return *this;
 }
 
-void Player::attack(int i, int j) {
-	// for invalid entries
-	shared_ptr<Card> temp = board.getTarget(oppNumber, j);
-	// to check whether its actually attacking a minion or not
-	if (temp->getType() != Card::minion) {
-			cout << "Minions can only attack minions" << endl;
-			return;
-	}
-	shared_ptr<Minion> target = static_pointer_cast<Minion>(temp);
-	// if the minion died, trigger the ritual ability if present
-	if (MinionsPlayed[i]->attack(target)) {
-		opponent->minionDied();
-	}
+    //move assignment operator
+Player& Player::operator=(Player &&other){
+        //delete my own....
+cout << "move assign called" << endl;
+
+        //other. = nullptr
+        name = other.name;
+        num = other.num;
+        return *this;
+    }
+
+     //dtor
+Player::~Player(){}
+
+
+void Player::drawCard(){
+     if (myHand.size()!=5){
+         try {
+            myHand.emplace_back(myDeck->draw());
+            int len = myHand.size();
+            cout << "This is hand:" << len << " "<< endl;
+            cout << *myHand[len-1];
+         } catch(string s) {
+             cout << s << endl;
+         }
+     }
+     else {
+        cout <<"Your hand is full! You already have 5 cards!"<< endl;
+     }
+
 }
 
-void Player::attack(int i) {
-	MinionsPlayed[i]->attack(opponent);	
+void Player::gainMagic(){
+    ++MP;
+    cout<< "Player " <<name<< " num: " <<num<< " has magic: " << MP<<endl;
 }
 
-void Player::use(int i, int p, int t) {
-	shared_ptr<Card> temp = board.getTarget(p, t);
-	if (temp->getType() != Card::minion) {
-		cout << "You can only use abilites from minions" << endl;
-		return;
-	}
-	shared_ptr<Minion> target = static_pointer_cast<Minion>(temp);
-	// execute the function from minion that would use the ability
-	MinionsPlayed[i]->use(&board, opponent, target);
-}
-
-void Player::use(int i) {
-	MinionsPlayed[i]->use(&board, this, static_pointer_cast<Minion>(MinionsPlayed[i]));
-}
-
-void Player::inspect(int i) {
-	board.inspect(i, number);
-}
-
-void Player::displayHand() {};
-
-void Player::initDeck(string filename) {
-	playerDeck->initDeck(filename);	
-}
-
-void Player::turnStart() {
-	MP++;
-	if (hand.size() != 5 || !playerDeck->isEmpty()) {
-		hand.emplace_back(playerDeck->drawCard());	
-	}	
-	if (ritualPlayed->getName() == "Dark Ritual") {
-		ritualPlayed->activate(this);
-	}				
-}
-
-bool Player::isDead() {
-	if (HP == 0) {
-		return true;
-	}
-	return false;
-}
-
-void Player::setOpponent(Player *opp) {
-	opponent = opp; 
-}
-
-void Player::takeDmg(int dmg) {
-	HP -= dmg;
-}
-
-void Player::useMP(int mp) {
-	MP -= mp;
-}
-
-void Player::minionDied() {
-	for (int i = 0; i < MinionsPlayed.size(); i++) {
-		if (MinionsPlayed[i]->getAbilityType() == Ability::minionDeath) {
-			MinionsPlayed[i]->use(&board, opponent, static_pointer_cast<Minion>(MinionsPlayed[i]));
-		}
-	}
-	if (ritualPlayed->getName() == "Soul Harvest") {
-		ritualPlayed->activate(this);
-	
-	}
-}
-
-
-void Player::turnEnd() {
-	// only case is Potion Seller
-	for (int i = 0; i < MinionsPlayed.size(); i++) {
-		if (MinionsPlayed[i]->getAbilityType() == Ability::endTurn) {
-			MinionsPlayed[i]->use(&board, this, static_pointer_cast<Minion>(MinionsPlayed[i]));
-		}
-	} 
-}
-
-void Player::minionPlayed(shared_ptr<Minion> target){
-	// only case is Fire Elemental
-	for (int i = 0; i < MinionsPlayed.size(); i++) {
-		if (MinionsPlayed[i]->getAbilityType() == Ability::minionBirth) {
-			MinionsPlayed[i]->use(&board, opponent, target);
-		}
-	} 
-	if (ritualPlayed->getName() == "Aura of Power") {
-		ritualPlayed->activate(target);
-	}
-	if (ritualPlayed->getName() == "Standstill") {
-		ritualPlayed->activate(target);
-	}
+void Player::discard(int i){
+    if (myHand.empty()|| i<0 || i>=myHand.size()) {
+        cout << "Can't give away something you don't have, try something else" << endl;
+    }
+    else {
+        myHand.erase(myHand.begin()+i);
+        cout << "now you only have " << myHand.size() << " left\n";
+    }
 }
