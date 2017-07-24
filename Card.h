@@ -1,4 +1,3 @@
-
 #ifndef _CARD_H__
 #define _CARD_H__
 #include <vector>
@@ -6,7 +5,6 @@
 #include <memory>
 #include <utility>
 class Player;
-
 
 class Card { // abstract class
 
@@ -19,7 +17,7 @@ class Card { // abstract class
 public:
 	Card(std::string name, int cost, std::string type,
     std::string description,  int p);
-	std::string getName();  //what's this method for???
+	std::string getName();  //what's this method for??
 	std::string getDescription();
 	std::string getType();
 	int getCost();
@@ -29,5 +27,4 @@ public:
 };
 
 #endif
-
 
