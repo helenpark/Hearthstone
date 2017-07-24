@@ -155,15 +155,19 @@ int main(int argc, char *argv[]) {
              	vector<shared_ptr<Minion>> died; // minions that die in this attack (note: max 2 minions)
              	died = curPlayer->myBoard->minionSlots[i]->attack(otherPlayer->myBoard->minionSlots[j]);
 			 	if (died[0] != nullptr) {
+			 		cout << "My minion - " << curPlayer->myBoard->minionSlots[i]->name << "has died" << endl; 
 			 		p1.myBoard->placeGrave(p1.myBoard->minionSlots[i]);
 			 		p1.myBoard->minionSlots.erase(p1.myBoard->minionSlots.begin() + i);
 			 	}
 			 	if (died[1] != nullptr) {
+			 		cout << "Their minion - " << otherPlayer->myBoard->minionSlots[j]->name << "has died" << endl; 
 			 		p2.myBoard->placeGrave(p2.myBoard->minionSlots[j]);
 			 		p2.myBoard->minionSlots.erase(p2.myBoard->minionSlots.begin() + j);
 			 	}
-			 } else {
-				curPlayer->myBoard->minionSlots[i]->attack(otherPlayer);
+			 } else { // case: attack the other player directly
+				int otherHP = curPlayer->myBoard->minionSlots[i]->attack(otherPlayer);
+				cout << "the other player has " << otherHP << "left!" << endl; 
+
              }
              cout << "attack called" << endl;
         }
@@ -226,12 +230,14 @@ int main(int argc, char *argv[]) {
             catch (string msg) {
                 cout << msg <<endl;
             } */
-            shared_ptr<Card> r1 = make_shared<DarkRitual>(1);
-            shared_ptr<Ritual> r2 = make_shared<AuraOfPower>(1);
-            shared_ptr<Ritual> r3 = make_shared<Standstill>(1);
-            t->placeRitual(r1);
-            t->placeRitual(r2);
-            t->placeRitual(r3);
+            
+            // TODO: uncomment -> this code currently does not compile.
+            // shared_ptr<Card> r1 = make_shared<DarkRitual>(1);
+//             shared_ptr<Ritual> r2 = make_shared<AuraOfPower>(1);
+//             shared_ptr<Ritual> r3 = make_shared<Standstill>(1);
+//             t->placeRitual(r1);
+//             t->placeRitual(r2);
+//             t->placeRitual(r3);
         }
 	}
 }
