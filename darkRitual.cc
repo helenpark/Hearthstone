@@ -13,11 +13,12 @@ DarkRitual:: DarkRitual(int p):Ritual{name2, cost2,
                 description2, p, activationCost2, charges2}{}
 
 
-/*
+
 DarkRitual::void useAbility(Target *t=nullptr){
     if(canActivate()){
-        o->gainMP();
+	// t should be a pointer to a player, so that it gains MP
+        t->gainMP();
         charges -= activationCost;
     }
 }
-*/
+
