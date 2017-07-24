@@ -1,4 +1,5 @@
-// testing git - helen
+// testing git - helen jenn
+
 #include "airElemental.h"
 using namespace std;
 
