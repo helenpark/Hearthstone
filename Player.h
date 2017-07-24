@@ -1,4 +1,5 @@
 
+
 #ifndef _PLAYER_H__
 #define _PLAYER_H__
 //#include "Board.h"
@@ -12,9 +13,12 @@ using namespace std;
 
 class Player {
 
-    int num; //player1 or player2
-    string name;
+    string name  = "no name";
+    int num= 2; //player1 or player2
+
     shared_ptr<Deck> myDeck;
+   // shared_ptr<Board> myBoard;
+
     vector<shared_ptr<Card>> myHand; //4 cards
     vector<shared_ptr<Card>> played;
     int HP = 20;  //20 lives

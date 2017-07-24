@@ -1,5 +1,6 @@
 
 
+
 #include "Player.h"
 //#include "Card.h"
 //#include "Ability.h"
@@ -12,7 +13,7 @@ using namespace std;
 
 bool testing = true;
 
-Player::Player(string name,int n): name(name), num{n} {
+Player::Player(string name,int n): name{name}, num{n} {
 
     myDeck = make_shared<Deck> (num);
 }
@@ -83,7 +84,9 @@ void Player::gainMagic(){
 }
 
 void Player::discard(int i){
-    if (myHand.empty()|| i<0 || i>=myHand.size()) {
+    int temp = myHand.size();
+
+    if (myHand.empty()|| i<0 || i>=temp) {
         cout << "Can't give away something you don't have, try something else" << endl;
     }
     else {

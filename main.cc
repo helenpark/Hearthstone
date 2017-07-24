@@ -1,23 +1,24 @@
+
+
+
+
 #include <iostream>
 #include <string>
 #include <fstream>
 //#include "Board.h"
 #include "Player.h"
 #include "Card.h"
-#include "Banish.h"
+#include "banish.h"
 #include "Deck.h"
 
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    // TODO: delete, this is testing purposes
-
-    cout << "GAME START: \n"
     string cmd;
 
 
     Player p1, p2;
-    bool init = false;
+   // bool init = false;
     bool testing = false;
     int turn = 1; //keep track of whose turn is it, turn{1,2}
 
@@ -45,7 +46,7 @@ int main(int argc, char *argv[]) {
 		// when -init arguement is present
 		if (arg == "-init") {
             ifstream initFile;
-            init = true;
+          //  init = true;
             ++i;
            // cout<<"Filename is: " << argv[i]<<endl;
 
