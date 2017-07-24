@@ -14,7 +14,7 @@ using namespace std;
 class Player;
 class Enchantment;
 
-class Minion: public Card { //abstract
+class Minion: public Card, public std::enable_shared_from_this<Minion> { //abstract
 
 //	std::vector<typename std::shared_ptr<typename Enchantment>> buffs; // enchantments applied to minion
 //	Ability *ability;
@@ -23,7 +23,7 @@ public:
     int AP; //attack points
 	int DP; //defense points
 	// use minion to attack, return true if minion dies after attack, false if minion lives after attack
-	bool attack(Minion *minion);
+	vector<shared_ptr<Minion>> attack(shared_ptr<Minion> minion);
 	// minion attacks the opponent, grab how much the minion can hit for
 	bool attack(Player *player);
 	
@@ -38,7 +38,7 @@ public:
 	// function extended from abstract parent class: Target. Describes how minion takes damage
 	
 	int getHit(int ap);
-
+	void die(); // take off of board and put in graveyard
 	// use the minions
 	
 	Minion(string name, int cost,

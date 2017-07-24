@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
 	bool testing = false;
 	int turn = 1;
 	Player *curPlayer = &p1; // alternative, notation to above line of code (Helen)
+	Player *otherPlayer = &p2;
 	vector<shared_ptr<Card>> hand;
 
 	// executing the arguments provided to main
@@ -122,6 +123,7 @@ int main(int argc, char *argv[]) {
 			curPlayer->drawCard();
 			//triggered start of turn abilities
 			}
+		otherPlayer = players[turn];
 		turn==1?turn=2:turn=1;
 		curPlayer = players[turn];
 		cout << "new turn: "<< turn << endl;
@@ -147,8 +149,22 @@ int main(int argc, char *argv[]) {
         }
 
         else if (cmd=="attack"){
-            // int i,j;
-
+             int i,j;
+             cin >> i; 
+             if (cin >> j) { // case: attack another minion
+             	vector<shared_ptr<Minion>> died; // minions that die in this attack (note: max 2 minions)
+             	died = curPlayer->myBoard->minionSlots[i]->attack(otherPlayer->myBoard->minionSlots[j]);
+			 	if (died[0] != nullptr) {
+			 		p1.myBoard->placeGrave(p1.myBoard->minionSlots[i]);
+			 		p1.myBoard->minionSlots.erase(p1.myBoard->minionSlots.begin() + i);
+			 	}
+			 	if (died[1] != nullptr) {
+			 		p2.myBoard->placeGrave(p2.myBoard->minionSlots[j]);
+			 		p2.myBoard->minionSlots.erase(p2.myBoard->minionSlots.begin() + j);
+			 	}
+			 } else {
+				curPlayer->myBoard->minionSlots[i]->attack(otherPlayer);
+             }
              cout << "attack called" << endl;
         }
         else if (cmd=="play"){
