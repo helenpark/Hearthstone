@@ -9,14 +9,13 @@ class Player;
 
 
 class Card { // abstract class
-
+	public:
 	std::string name;
 	int cost;
 	std::string type;
 	std::string description;
 	int owner; //player1 or player2
 
-public:
 	Card(std::string name, int cost, std::string type,
     std::string description,  int p);
 	std::string getName();  //what's this method for???

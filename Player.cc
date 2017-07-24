@@ -94,3 +94,7 @@ void Player::discard(int i){
         cout << "now you only have " << myHand.size() << " left\n";
     }
 }
+
+vector<shared_ptr<Card>> Player::getHand() {
+    return myHand;
+}

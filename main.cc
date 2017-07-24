@@ -18,11 +18,14 @@ int main(int argc, char *argv[]) {
 
 
     Player p1, p2;
+    vector<Player *> players;
+    players.push_back(&p1);
+    players.push_back(&p2);
    // bool init = false;
     bool testing = false;
     int turn = 1; //keep track of whose turn is it, turn{1,2}
-
-
+    Player *curPlayer = &p1; // alternative, notation to above line of code (Helen)
+    vector<shared_ptr<Card>> hand;
 
 	// executing the arguments provided to main
 	for (int i = 1; i < argc; i++) {
@@ -128,7 +131,8 @@ int main(int argc, char *argv[]) {
                 p2.drawCard();
             }
             turn==1?turn=2:turn=1;
-            cout << "new turn: "<< turn << endl;
+            curPlayer = players[turn];
+	    cout << "new turn: "<< turn << endl;
         }
         if (cmd=="quit"){
             done = true;
@@ -137,7 +141,6 @@ int main(int argc, char *argv[]) {
         if (testing) {
             if (cmd=="draw"){
                 turn==1?p1.drawCard():p2.drawCard();
-                cout << "draw called" << endl;
             }
             if (cmd=="discard"){
                 int i;
@@ -151,7 +154,11 @@ int main(int argc, char *argv[]) {
              cout << "attack called" << endl;
         }
         if (cmd=="play"){
-            cout << "play called" << endl;
+            int i;
+            cin >> i;
+            cout << "play card:" << endl;
+            cout << *hand[i] << endl;
+            // add board to player 
         }
 
         if (cmd=="use"){
@@ -165,7 +172,11 @@ int main(int argc, char *argv[]) {
 
         if (cmd=="hand"){
             cout << "hand called" << endl;
-        }
+	          hand = curPlayer->getHand();
+	          for (int i = 0; i < hand.size(); i++) {
+		          cout << *hand[i] << ' ';
+            }
+	      }
 
         if (cmd=="board"){
             cout << "board called" << endl;

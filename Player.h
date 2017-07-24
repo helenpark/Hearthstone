@@ -48,6 +48,7 @@ public:
     void gainMagic();
     // discard card
     void discard(int i);
-
+    // display hand, return number of cards currently in hand
+    vector<shared_ptr<Card>> getHand();
 };
 #endif
