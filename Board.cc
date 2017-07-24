@@ -84,7 +84,7 @@ void Board::placeRitual(shared_ptr<Card> r){
 //place a died minion in the grave
 void Board::placeGrave(shared_ptr<Card> m){
     string name = m->getName();
-
+    
     cout << "placed: " << name << " in the graveyard \n";
     grave.emplace_back(name);
     int temp = grave.size();
