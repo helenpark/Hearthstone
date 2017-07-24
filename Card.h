@@ -13,19 +13,9 @@ class Card { // abstract class
 	std::string type;
 	std::string description;
 	int owner; //player1 or player2
-
-
-
-
-
-
-
-
-
-public:
 	Card(std::string name, int cost, std::string type,
     std::string description,  int p);
-	std::string getName();  //what's this method for??
+	std::string getName();  
 	std::string getDescription();
 	std::string getType();
 	int getCost();

@@ -1,13 +1,13 @@
-
-
-
 #include "Player.h"
-//#include "Card.h"
+#include "Card.h"
 //#include "Ability.h"
 #include <iostream>
 #include <vector>
 #include <string>
 #include <exception>
+#include <memory>
+
+#include "banish.h"
 
 using namespace std;
 
@@ -60,6 +60,11 @@ cout << "move assign called" << endl;
      //dtor
 Player::~Player(){}
 
+bool Player::hasCard(int i){
+    int temp = myHand.size();
+
+    return !(myHand.empty()|| i-1<0 || i-1>=temp);
+}
 
 void Player::drawCard(){
      if (myHand.size()!=5){
@@ -84,9 +89,8 @@ void Player::gainMagic(){
 }
 
 void Player::discard(int i){
-    int temp = myHand.size();
 
-    if (myHand.empty()|| i<0 || i>=temp) {
+    if (!hasCard(i)) {
         cout << "Can't give away something you don't have, try something else" << endl;
     }
     else {
@@ -95,6 +99,63 @@ void Player::discard(int i){
     }
 }
 
-vector<shared_ptr<Card>> Player::getHand() {
-    return myHand;
+// orders minion i to attack the opposing player
+void attack (int i){}
+// overloaded attack orders minion i to attack opponent's minion j
+void attack(int i, int j){}
+
+
+void Player::play(int i) {
+
+    if (hasCard(i)) {
+        string type = myHand[i-1]->getType();
+        cout << "my type is: " << type << endl;
+        if (type=="Ritual") {
+            shared_ptr<Card> t = myHand[i-1];
+            myBoard->placeRitual(t);
+        }
+        else if(type=="Minion") {
+             shared_ptr<Card> t = myHand[i-1];
+            myBoard->placeMinion(t);
+        }
+        else if (type=="Spell") {
+                // use spell
+        }
+        discard(i);
+    }
+    else {
+        cout << "You don't have this card!" << endl;
+    }
 }
+
+//subtract HP when hit -> return remaining hp
+int Player::getHit(int AP) {
+	HP = HP - AP;
+	return HP;
+}
+
+// overloaded play, plays the ith card on card t owned by player p
+void play (int i, int p, int t);
+
+//use ith minion owned by the player
+void Player::use(int i){
+}
+//inspect ith minion owned
+void Player::inspect(int i){
+
+}
+//display the hand
+void Player::hand (){
+
+    for(vector<int>::size_type i = 0; i != myHand.size(); i++) {
+
+         cout << *(myHand[i]);
+    }
+
+}
+//display the board
+void Player::board(){
+
+}
+
+
