@@ -62,10 +62,10 @@ shared_ptr<Card> Board::resurrect(){
 void Board::placeMinion(shared_ptr<Card> m) {
     int i = minionSlots.size();
     if (i<5) {
-        minionSlots.emplace_back(m);
+        minionSlots.emplace_back(static_pointer_cast<Minion>(m));
         int temp = minionSlots.size();
         cout << *minionSlots[temp-1];
-        cout << "The size of the minionSlots is: " << temp << endl<<endl;
+        cout << "The size of the minionSlots is: " << temp <<endl;
     }
     else if(i==5){
         cout << "You already have 5 minions on board!" << endl;
@@ -76,7 +76,7 @@ void Board::placeMinion(shared_ptr<Card> m) {
 void Board::placeRitual(shared_ptr<Card> r){
     cout << "was here, place ritual" << endl;
     myRitual.reset();
-    myRitual = r;
+    myRitual = static_pointer_cast<Ritual>(r);
     cout << "Assigned" << endl;
     cout <<"My current ritual is: " << *myRitual;
 }

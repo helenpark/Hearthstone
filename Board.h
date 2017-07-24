@@ -19,9 +19,9 @@ class Card;
 class Board {
     public:
         int owner = 1;
-        vector<shared_ptr<Card>> minionSlots;
+        vector<shared_ptr<Minion>> minionSlots;
         vector<string> grave;
-        shared_ptr<Card> myRitual;
+        shared_ptr<Ritual> myRitual;
 
 
         Board();
