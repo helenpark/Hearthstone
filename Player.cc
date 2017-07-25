@@ -184,11 +184,13 @@ void Player::minionPlayed(shared_ptr<Minion> minion) {
 		}
 		if (myBoard->myRitual->getName() == "Standstill") {
 			myBoard->myRitual->activate(nullptr, myBoard, minion);	
+			myBoard->myRitual->activate(nullptr, opponent->myBoard, minion);
 		}
 	}
 	if (opponent->myBoard->myRitual) {
 		if (opponent->myBoard->myRitual->getName() == "Standstill") {
 			opponent->myBoard->myRitual->activate(nullptr, opponent->myBoard, minion);
+			opponent->myBoard->myRitual->activate(nullptr, myBoard, minion);
 		}
 	}
 	int len = myBoard->minionSlots.size();	
