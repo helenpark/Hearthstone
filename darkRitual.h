@@ -14,7 +14,7 @@ class DarkRitual: public Ritual { //concrete card
 
 public:
 	DarkRitual(int p);
-	void activate(Player *player=nullptr, Board *board=nullptr, 
+	void activate(Player *player=nullptr, Board *board=nullptr,
 		      std::shared_ptr<Minion> minion=nullptr);
 
 };

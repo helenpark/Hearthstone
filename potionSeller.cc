@@ -1,5 +1,5 @@
-
-
+#include <vector>
+#include "ascii_graphics.h"
 #include "potionSeller.h"
 using namespace std;
 
@@ -12,3 +12,8 @@ int DP16 = 3;
 
 PotionSeller:: PotionSeller(int p):Minion{name16, cost16,
                 description16, p, AP16,DP16,0}{}
+
+void PotionSeller::print() {
+    vector<string> display = display_minion_triggered_ability(name,cost,AP,DP,description);
+    printCard(display);
+}

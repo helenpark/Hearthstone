@@ -26,6 +26,16 @@ int Card::getCost(){
     return cost;
 }
 
+void Card::printCard(vector<string> display){
+    int len = display.size();
+    for (int i=0; i<len; ++i) {
+        string line = display[i];
+        cout << line << endl;
+    }
+}
+void Card::print(){}
+
+
 ostream &operator<<(ostream &out, const Card &b){
     out << "This card is: " << b.name << endl;
     out << "Type: " << b.type<<endl;

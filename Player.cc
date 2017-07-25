@@ -32,7 +32,6 @@ Player::Player (const Player &other): name{other.name},num{other.num}{
 
 //move ctor
 Player::Player (Player &&other): name{other.name},num{other.num}{
-    //myDeck = make_shared<Deck> ();
     cout << "move ctor called" << endl;
 
 }
@@ -72,7 +71,7 @@ void Player::drawCard(){
             myHand.emplace_back(myDeck->draw());
             int len = myHand.size();
             cout << "This is hand:" << len << " "<< endl;
-            cout << *myHand[len-1];
+            (myHand[len-1])->print();
          } catch(string s) {
              cout << s << endl;
          }
@@ -146,12 +145,9 @@ void Player::inspect(int i){
 }
 //display the hand
 void Player::hand (){
-
-    for(vector<int>::size_type i = 0; i != myHand.size(); i++) {
-
-         cout << *(myHand[i]);
+     for(vector<int>::size_type i = 0; i != myHand.size(); i++) {
+         (myHand[i]->print());
     }
-
 }
 //display the board
 void Player::board(){

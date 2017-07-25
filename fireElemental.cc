@@ -1,5 +1,6 @@
 
-
+#include "ascii_graphics.h"
+#include <vector>
 #include "fireElemental.h"
 using namespace std;
 
@@ -12,3 +13,8 @@ int DP15 = 2;
 
 FireElemental:: FireElemental(int p):Minion{name15, cost15,
                 description15, p, AP15,DP15,0}{}
+
+void FireElemental::print() {
+    vector<string> display = display_minion_triggered_ability(name,cost,AP,DP,description);
+    printCard(display);
+}

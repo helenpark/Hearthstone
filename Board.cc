@@ -20,16 +20,11 @@ shared_ptr<Card> Board::resurrect(){
         grave.pop_back();
         cout << "you resurrected one minion: \n";
         shared_ptr <Card> newMinion = nullptr;
-        if(name=="Air Elemental"){
+        if(name=="Air Elemental")
            newMinion = make_shared<AirElemental>(owner);
-           cout << *newMinion;
-           return newMinion;
-        }
 
-      else if(name=="Earth Elemental") {
-
+        else if(name=="Earth Elemental")
             newMinion = make_shared<EarthElemental> (owner);
-        }
 
         else if(name=="Fire Elemental")
             newMinion = make_shared<FireElemental> (owner);
@@ -45,8 +40,9 @@ shared_ptr<Card> Board::resurrect(){
 
         else if(name=="Master Summoner")
             newMinion = make_shared<MasterSummoner> (owner);
-        cout << *newMinion;
 
+       // cout << *newMinion;
+        newMinion->print();
         int temp = grave.size();
         cout << "The size of the graveyard is: " << temp << endl<<endl;
         return newMinion;
@@ -64,7 +60,8 @@ void Board::placeMinion(shared_ptr<Card> m) {
     if (i<5) {
         minionSlots.emplace_back(static_pointer_cast<Minion>(m));
         int temp = minionSlots.size();
-        cout << *minionSlots[temp-1];
+     //   cout << *minionSlots[temp-1];
+        minionSlots[temp-1]->print();
         cout << "The size of the minionSlots is: " << temp <<endl;
     }
     else if(i==5){
@@ -78,13 +75,15 @@ void Board::placeRitual(shared_ptr<Card> r){
     myRitual.reset();
     myRitual = static_pointer_cast<Ritual>(r);
     cout << "Assigned" << endl;
-    cout <<"My current ritual is: " << *myRitual;
+    cout <<"My current ritual is: " << endl;
+    //cout <<"My current ritual is: " << *myRitual;
+    myRitual->print();
 }
 
 //place a died minion in the grave
 void Board::placeGrave(shared_ptr<Card> m){
     string name = m->getName();
-    
+
     cout << "placed: " << name << " in the graveyard \n";
     grave.emplace_back(name);
     int temp = grave.size();

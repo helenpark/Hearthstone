@@ -147,7 +147,8 @@ int main(int argc, char *argv[]) {
         else if (cmd=="discard"){
             if (testing){
                 int i;
-                cin >> i;
+                iss >> i;
+
                 turn==1?p1.discard(i):p2.discard(i);
                 cout << "discard called" << endl;
             }
@@ -165,19 +166,19 @@ int main(int argc, char *argv[]) {
 			 cout << "attacking minion... " << endl;
 				cout << "4" << endl;
 				shared_ptr<Minion> oppMinion = otherPlayer->myBoard->minionSlots[j-1];
-			
+
 				// minions that die in this attack (note: max 2 minions)
 				vector<shared_ptr<Minion>> deadMinions = myMinion->attack(oppMinion);
-			
+
 				if (deadMinions[0] != nullptr) {
 					cout << "5" << endl;
-					cout << "My minion - " << myMinion->name << "has died" << endl; 
+					cout << "My minion - " << myMinion->name << "has died" << endl;
 					p1.myBoard->placeGrave(myMinion);
 					p1.myBoard->minionSlots.erase(p1.myBoard->minionSlots.begin() + i-1);
 				}
 				if (deadMinions[1] != nullptr) {
 					cout << "6" << endl;
-					cout << "Their minion - " << oppMinion->name << "has died" << endl; 
+					cout << "Their minion - " << oppMinion->name << "has died" << endl;
 					p2.myBoard->placeGrave(oppMinion);
 					p2.myBoard->minionSlots.erase(p2.myBoard->minionSlots.begin() + j-1);
 				}
@@ -186,17 +187,17 @@ int main(int argc, char *argv[]) {
 				cout << "8" << endl;
 				cout << "attacking player... " << endl;
 				int otherHP = myMinion->attack(otherPlayer);
-				cout << "the other player has " << otherHP << "left!" << endl; 
-		 
+				cout << "the other player has " << otherHP << "left!" << endl;
+
 			 }
 			 cout << "9" << endl;
 			 cout << "attack called" << endl;
 
-			
+
         }
 		else if (cmd=="play"){
             int i;
-            cin >> i;
+            iss >> i;
             turn==1?p1.play(i):p2.play(i);
             cout << "play called" << endl;
             // still need to implement the second option of play with i p t
@@ -231,15 +232,15 @@ int main(int argc, char *argv[]) {
         }
         else if (cmd=="t") { //testing cmd for board methods (Jenn)
 
-         //Board *t = new Board(1);
-          /*   shared_ptr<Minion> m = make_shared<EarthElemental>(1);
+            Board *t = new Board(1);
+            shared_ptr<Minion> m = make_shared<EarthElemental>(1);
             shared_ptr<Minion> b = make_shared<FireElemental>(1);
               t->placeGrave(m);
 
             t->placeGrave(b);
             t->resurrect();
             t->resurrect();
-            t->placeGrave(m);
+            t->placeGrave(m);/*
 
             t->placeMinion(m);
             t->placeMinion(m);
@@ -253,7 +254,7 @@ int main(int argc, char *argv[]) {
             catch (string msg) {
                 cout << msg <<endl;
             } */
-            
+
             // TODO: uncomment -> this code currently does not compile.
             // shared_ptr<Card> r1 = make_shared<DarkRitual>(1);
 //             shared_ptr<Ritual> r2 = make_shared<AuraOfPower>(1);
@@ -264,4 +265,4 @@ int main(int argc, char *argv[]) {
         }
 	}
 }
-	
+

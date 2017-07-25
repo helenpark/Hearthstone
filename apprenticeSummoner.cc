@@ -1,4 +1,6 @@
 #include "apprenticeSummoner.h"
+#include <vector>
+#include "ascii_graphics.h"
 using namespace std;
 
 string name18 = "Apprentice Summoner";
@@ -10,3 +12,8 @@ int activationCost18 = 1;
 
 ApprenticeSummoner:: ApprenticeSummoner(int p):Minion{name18, cost18,
                 description18, p, AP18,DP18, activationCost18}{}
+
+void ApprenticeSummoner::print() {
+    vector<string> display =  display_minion_activated_ability(name,cost,AP,DP,ac,description);
+    printCard(display);
+}

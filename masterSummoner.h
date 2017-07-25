@@ -14,5 +14,6 @@ class MasterSummoner: public Minion { //concrete card
 
 public:
     MasterSummoner(int p);
+    void print() override;
 };
 #endif

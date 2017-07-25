@@ -14,5 +14,6 @@ class FireElemental: public Minion { //concrete card
 
 public:
     FireElemental(int p);
+    void print() override;
 };
 #endif

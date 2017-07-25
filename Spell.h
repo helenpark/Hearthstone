@@ -21,6 +21,8 @@ public:
 */
     Spell(string name, int cost,
       string description, int p);
+
+      void print() override;
 };
 
 #endif

@@ -9,7 +9,7 @@ using namespace std;
 class Board;
 class Player;
 class Minion;
- 
+
 class Ritual: public Card { //abstract
 
 public:
@@ -21,6 +21,7 @@ public:
 
 	bool canActivate();
 	// uses the ritual ability
+	void print() override;
 	virtual void activate(Player *player=nullptr, Board *board=nullptr, std::shared_ptr<Minion> minion=nullptr) = 0;
 
 };
