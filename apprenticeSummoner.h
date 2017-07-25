@@ -14,5 +14,6 @@ class ApprenticeSummoner: public Minion { //concrete card
 
 public:
     ApprenticeSummoner(int p);
+    void print() override;
 };
 #endif

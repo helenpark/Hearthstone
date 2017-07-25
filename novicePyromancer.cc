@@ -1,5 +1,6 @@
-
-
+#include <vector>
+#include "ascii_graphics.h"
+#include <iostream>
 #include "novicePyromancer.h"
 using namespace std;
 
@@ -12,3 +13,7 @@ int activationCost17 = 1;
 
 NovicePyromancer:: NovicePyromancer(int p):Minion{name17, cost17,
                 description17, p, AP17,DP17, activationCost17}{}
+void NovicePyromancer::print() {
+       vector<string> display =  display_minion_activated_ability(name,cost,AP,DP,ac,description);
+    printCard(display);
+}

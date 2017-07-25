@@ -13,6 +13,7 @@ class RaiseDead: public Spell { //concrete card
 
 public:
     RaiseDead(int p);
+
 };
 
 #endif

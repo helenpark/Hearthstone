@@ -1,5 +1,6 @@
 
 #include "darkRitual.h"
+#include <iostream>
 using namespace std;
 
 string name2 = "Dark Ritual";
@@ -13,12 +14,11 @@ DarkRitual:: DarkRitual(int p):Ritual{name2, cost2,
                 description2, p, activationCost2, charges2}{}
 
 
-
+/*
 DarkRitual::void useAbility(Target *t=nullptr){
     if(canActivate()){
-	// t should be a pointer to a player, so that it gains MP
-        t->gainMP();
+        o->gainMP();
         charges -= activationCost;
     }
 }
-
+*/

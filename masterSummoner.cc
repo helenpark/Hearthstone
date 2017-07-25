@@ -1,7 +1,9 @@
 
 
-
+#include <iostream>
 #include "masterSummoner.h"
+#include <vector>
+#include "ascii_graphics.h"
 using namespace std;
 
 string name19 = "Master Summoner";
@@ -13,3 +15,7 @@ int activationCost19 = 2;
 
 MasterSummoner:: MasterSummoner(int p):Minion{name19, cost19,
                 description19, p, AP19,DP19, activationCost19}{}
+void MasterSummoner::print() {
+    vector<string> display =  display_minion_activated_ability(name,cost,AP,DP,ac,description);
+    printCard(display);
+}
