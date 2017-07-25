@@ -12,7 +12,7 @@ class Standstill: public Ritual { //concrete card
 
 public:
 	Standstill(int p);
-	void activate(Player *player=nullptr, Board *board=nullptr, 
+	void activate(Player *player=nullptr, shared_ptr<Board> board=nullptr, 
 			std::shared_ptr<Minion> minion=nullptr);
 
 };

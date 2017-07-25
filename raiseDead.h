@@ -13,6 +13,7 @@ class RaiseDead: public Spell { //concrete card
 
 public:
     RaiseDead(int p);
+     void cast(shared_ptr<Board> myBoard,shared_ptr<Card> target=nullptr, shared_ptr<Board> oppBoard=nullptr) override;
 };
 
 #endif

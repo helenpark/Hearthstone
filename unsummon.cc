@@ -8,3 +8,7 @@ string description8 = "Put target inion on the bottom of its owner's deck";
 
 Unsummon:: Unsummon(int p):Spell{name8, cost8,
                 description8, p}{}
+
+void Unsummon::cast(shared_ptr<Board> myBoard,shared_ptr<Card> target, shared_ptr<Board> oppBoard){
+
+}

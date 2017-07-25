@@ -10,6 +10,8 @@
 #include "Minion.h"
 using namespace std;
 
+class Board; 
+
 class AirElemental: public Minion { //concrete card
 
 public:

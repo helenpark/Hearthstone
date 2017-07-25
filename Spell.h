@@ -5,9 +5,10 @@
 #include <vector>
 #include <string>
 #include <memory>
+
 using namespace std;
 // forward declaration, make sure to #include "Board.h" in the .cc file
-//class Board;
+class Board;
 
 class Spell: public Card { //abstract
 
@@ -23,6 +24,8 @@ public:
       string description, int p);
 
       void print() override;
+
+      virtual void cast(shared_ptr<Board> myBoard, shared_ptr<Card> target=nullptr, shared_ptr<Board> oppBoard=nullptr)=0;
 };
 
 #endif

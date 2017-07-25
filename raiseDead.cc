@@ -1,4 +1,4 @@
-
+#include "Board.h"
 #include "raiseDead.h"
 using namespace std;
 
@@ -9,3 +9,7 @@ string description11 = "Resurrect the top minion in your graveyard";
 
 RaiseDead:: RaiseDead(int p):Spell{name11, cost11,
                 description11, p}{}
+
+void RaiseDead::cast(shared_ptr<Board> myBoard,shared_ptr<Card> target, shared_ptr<Board> oppBoard){
+    myBoard->resurrect();
+}

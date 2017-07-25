@@ -27,10 +27,12 @@ Ability::Ability(string name, int cost): name(name), cost(cost) {
 }
 
 void Ability::fireElemental(shared_ptr<Minion> minion) {
+	cout << "Fire Elemental ability used on " << minion->getName() << endl;
 	minion->DP -= 1;	
 }
 
-void Ability::potionSeller(Board *board) {
+void Ability::potionSeller(shared_ptr<Board> board) {
+	cout << "Potion Seller ability used" << endl;
 	int len = board->minionSlots.size();
 	for (int i = 0; i < len; i++) {
 		board->minionSlots[i]->DP += 1;	
@@ -38,10 +40,12 @@ void Ability::potionSeller(Board *board) {
 } 
 
 void Ability::novicePyromancer(shared_ptr<Minion> minion) {
+	cout << "Novice Pyromancer ability used on " << minion->getName() <<endl;
 	minion->DP -= 1;
 }
 
-void Ability::masterSummoner(Board *board) {
+void Ability::masterSummoner(shared_ptr<Board> board) {
+	cout << "Master Summoner ability used" << endl;
 	int i;
 	int summon = 5 - board->minionSlots.size();
 	if (summon > 3) {
@@ -55,6 +59,7 @@ void Ability::masterSummoner(Board *board) {
 	}
 }
 
-void Ability::apprenticeSummoner(Board *board) {
+void Ability::apprenticeSummoner(shared_ptr<Board> board) {
+	cout << "Aprrentice Summoner ability used" << endl;
 	board->minionSlots.emplace_back(make_shared<AirElemental>(1));
 }

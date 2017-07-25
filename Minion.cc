@@ -3,7 +3,9 @@ using namespace std;
 #include "Player.h"
 
 Minion::Minion(string name, int cost, string description, int p, int AP, int DP, int ac):
-	Card{name,cost,"Minion",description,p}, AP{AP}, DP{DP},ac{ac} {}
+	Card{name,cost,"Minion",description,p}, AP{AP}, DP{DP},ac{ac}, original(true) {
+
+}
 
 vector<shared_ptr<Minion>> Minion::attack(shared_ptr<Minion> minion) {
    int targetHP = minion->getHit(AP);
@@ -37,7 +39,14 @@ void Minion::die() {
 }
 
 int Minion::getHit(int ap) {
+   cout << "I am " << name << ". Orignally I have: "<< DP << " lives.\n";
    DP = DP - ap;
+   cout << "Now I have " << DP <<endl;
+
+    //TODO if die() then put to graveyard
+   if(DP<=0){
+        //put to graveyard
+   }
    return DP;
 }
 

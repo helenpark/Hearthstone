@@ -13,7 +13,7 @@ class AuraOfPower: public Ritual { //concrete card
 
 public:
 	AuraOfPower(int p);
-	void activate(Player *player=nullptr, Board *board=nullptr, std::shared_ptr<Minion> minion=nullptr);
+	void activate(Player *player=nullptr, std::shared_ptr<Board> board=nullptr, std::shared_ptr<Minion> minion=nullptr);
 
 };
 #endif

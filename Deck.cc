@@ -63,7 +63,7 @@ void Deck::initDeck(string filename) {
 		if (name=="Banish")
             base.emplace_back(make_shared<Banish> (owner));
 
-		else if(name=="Unsummon")
+/*		else if(name=="Unsummon")
             base.emplace_back(make_shared<Unsummon> (owner));
 
         else if(name=="Recharge")
@@ -72,13 +72,13 @@ void Deck::initDeck(string filename) {
 		else if(name=="Disenchant")
             base.emplace_back(make_shared<Disenchant> (owner));
 
-		else if(name=="Raise Dead")
+*/		else if(name=="Raise Dead")
             base.emplace_back(make_shared<RaiseDead> (owner));
 
 		else if(name=="Blizzard")
             base.emplace_back(make_shared<Blizzard> (owner));
 
-		else if(name=="Giant Strength")
+/*		else if(name=="Giant Strength")
             base.emplace_back(make_shared<GiantStrength> (owner));
 
 		else if(name=="Magic Fatigue")
@@ -87,14 +87,14 @@ void Deck::initDeck(string filename) {
 		else if(name=="Silence")
             base.emplace_back(make_shared<Silence> (owner));
 
-		// else if(name=="Dark Ritual")
-//             base.emplace_back(make_shared<DarkRitual> (owner));
-// 
-// 		else if(name=="Aura of Power")
-//             base.emplace_back(make_shared<AuraOfPower> (owner));
-// 
-// 		else if(name=="Standstill")
-//             base.emplace_back(make_shared<Standstill> (owner));
+*/		 else if(name=="Dark Ritual")
+             base.emplace_back(make_shared<DarkRitual> (owner));
+
+ 		else if(name=="Aura of Power")
+             base.emplace_back(make_shared<AuraOfPower> (owner));
+
+ 		else if(name=="Standstill")
+             base.emplace_back(make_shared<Standstill> (owner));
 
 		else if(name=="Air Elemental")
             base.emplace_back(make_shared<AirElemental> (owner));
@@ -105,7 +105,7 @@ void Deck::initDeck(string filename) {
 		else if(name=="Fire Elemental")
             base.emplace_back(make_shared<FireElemental> (owner));
 
-		else if(name=="Potion Seller")
+/*		else if(name=="Potion Seller")
             base.emplace_back(make_shared<PotionSeller> (owner));
 
 		else if(name=="Novice Pyromancer")
@@ -115,7 +115,7 @@ void Deck::initDeck(string filename) {
             base.emplace_back(make_shared<ApprenticeSummoner> (owner));
 
 		else if(name=="Master Summoner")
-            base.emplace_back(make_shared<MasterSummoner> (owner));
+            base.emplace_back(make_shared<MasterSummoner> (owner)); */
 	}
 }
 

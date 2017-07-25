@@ -6,18 +6,19 @@
 #include "Deck.h"
 //#include "Grave.h"
 //#include "Ritual.h"
+#include "Minion.h"
 #include <vector>
 #include <string>
 #include <memory>
 using namespace std;
 
-class Board;
 class Player {
 
 public:
 
     string name  = "no name";
     int num= 2; //player1 or player2
+    Player *opponent;
 
 
 
@@ -69,10 +70,20 @@ public:
     //display the hand
     void hand ();
     //display the board
-    void board();
-	//subtract HP when hit -> return remaining hp
-	int getHit(int AP);
+    void board(int i);
+    //subtract HP when hit -> return remaining hp
+    int getHit(int AP);
 
+    // function for turnStart triggers
+    void turnStart();
+    // function for turnEnd triggers
+    void turnEnd();
+    // function for minionPlayed
+    void minionPlayed(std::shared_ptr<Minion> minion);
+    // function for miniondied
+    void minionDied();
+    // the status of the player as of right now
+    void status();
 };
 #endif
 
