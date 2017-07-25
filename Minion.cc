@@ -37,14 +37,9 @@ void Minion::die() {
 }
 
 int Minion::getHit(int ap) {
-   cout << "I am " << name << ". Orignally I have: "<< DP << " lives.\n";
+   //cout << "I am " << name << ". Orignally I have: "<< DP << " lives.\n";
    DP = DP - ap;
-   cout << "Now I have " << DP <<endl;
-
-    //TODO if die() then put to graveyard
-   if(DP<=0){
-        //put to graveyard
-   }
+   //cout << "Now I have " << DP <<endl;
    return DP;
 }
 
