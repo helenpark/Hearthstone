@@ -12,7 +12,11 @@ string description6 = "Enchanted minion cannot use abilities";
 Silence:: Silence(int p):Enchantment{name6, cost6,
                 description6, p}{}
 
+
+std::vector<std::string>  Silence::getAscii(){
+    return display_enchantment(name,cost,description);
+}
+
 void Silence::print() {
-    vector<string> display = display_enchantment(name,cost,description);
-    printCard(display);
+    printCard(getAscii());
 }

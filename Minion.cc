@@ -37,7 +37,7 @@ void Minion::die() {
 }
 
 int Minion::getHit(int ap) {
-   //cscout << "I am " << name << ". Orignally I have: "<< DP << " lives.\n";
+   //cout << "I am " << name << ". Orignally I have: "<< DP << " lives.\n";
    DP = DP - ap;
    //cout << "Now I have " << DP <<endl;
    return DP;

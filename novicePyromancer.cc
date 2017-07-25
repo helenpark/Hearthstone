@@ -13,7 +13,11 @@ int activationCost17 = 1;
 NovicePyromancer:: NovicePyromancer(int p):Minion{name17, cost17,
                 description17, p, AP17,DP17, activationCost17}{}
 
-void NovicePyromancer::print() {
-       vector<string> display =  display_minion_activated_ability(name,cost,AP,DP,ac,description);
-    printCard(display);
+std::vector<std::string>  NovicePyromancer::getAscii(){
+    return display_minion_activated_ability(name,cost,AP,DP,ac,description);
 }
+
+void NovicePyromancer::print() {
+    printCard(getAscii());
+}
+

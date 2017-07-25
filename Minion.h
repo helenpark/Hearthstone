@@ -48,6 +48,7 @@ public:
 	Minion(string name, int cost,
       string description, int p, int AP, int DP, int ac);
     void print()=0;
+    std::vector<std::string> getAscii()=0;
 	virtual ~Minion();
 
 };

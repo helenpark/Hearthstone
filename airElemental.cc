@@ -19,9 +19,11 @@ int DP13 = 1;
 AirElemental:: AirElemental(int p):Minion{name13, cost13,
                 description13, p, AP13,DP13,0}{}
 
-void AirElemental::print() {
-    vector<string> display = display_minion_no_ability(name,cost,AP,DP);
-    printCard(display);
+std::vector<std::string>  AirElemental::getAscii(){
+    return display_minion_no_ability(name,cost,AP,DP);
+}
 
+void AirElemental::print() {
+    printCard(getAscii());
 }
 

@@ -119,4 +119,3 @@ void Board::checkDead() {
 		}
 	}
 }
-

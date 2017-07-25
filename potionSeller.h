@@ -15,5 +15,6 @@ class PotionSeller: public Minion { //concrete card
 public:
     PotionSeller(int p);
     void print() override;
+    std::vector<std::string> getAscii() override;
 };
 #endif

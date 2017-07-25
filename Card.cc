@@ -35,6 +35,7 @@ void Card::printCard(vector<string> display){
 }
 void Card::print(){}
 
+vector<string> Card::getAscii(){}
 
 ostream &operator<<(ostream &out, const Card &b){
     out << "This card is: " << b.name << endl;

@@ -15,5 +15,6 @@ class MasterSummoner: public Minion { //concrete card
 public:
     MasterSummoner(int p);
     void print() override;
+    std::vector<std::string> getAscii() override;
 };
 #endif

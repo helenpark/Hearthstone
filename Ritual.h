@@ -22,6 +22,7 @@ public:
 	bool canActivate();
 	// uses the ritual ability
 	void print() override;
+	std::vector<std::string> getAscii() override;
 	virtual void activate(Player *player=nullptr, std::shared_ptr<Board> 	board=nullptr, std::shared_ptr<Minion> minion=nullptr) = 0;
 
 };

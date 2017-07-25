@@ -17,8 +17,11 @@ MasterSummoner:: MasterSummoner(int p):Minion{name19, cost19,
                 description19, p, AP19,DP19, activationCost19}{}
 
 
+std::vector<std::string>  MasterSummoner::getAscii(){
+    return display_minion_activated_ability(name,cost,AP,DP,ac,description);
+}
+
 void MasterSummoner::print() {
-    vector<string> display =  display_minion_activated_ability(name,cost,AP,DP,ac,description);
-    printCard(display);
+    printCard(getAscii());
 }
 

@@ -11,7 +11,11 @@ bool Ritual::canActivate(){
     return (charges - activationCost) > 0;
 }
 
+std::vector<std::string> Ritual::getAscii() {
+    return display_ritual(name,cost,activationCost,description,charges);
+}
+
+
 void Ritual::print() {
-    vector<string> display = display_ritual(name,cost,activationCost,description,charges);
-     printCard(display);
+     printCard(getAscii());
 }

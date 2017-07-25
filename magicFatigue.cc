@@ -12,7 +12,11 @@ string description5 = "Enchanted minion's activated ability costs 2 more";
 MagicFatigue:: MagicFatigue(int p):Enchantment{name5, cost5,
                 description5, p}{}
 
+
+std::vector<std::string>  MagicFatigue::getAscii(){
+    return display_enchantment(name,cost,description);
+}
+
 void MagicFatigue::print() {
-    vector<string> display = display_enchantment(name,cost,description);
-    printCard(display);
+    printCard(getAscii());
 }

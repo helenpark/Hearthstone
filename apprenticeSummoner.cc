@@ -13,7 +13,11 @@ int activationCost18 = 1;
 ApprenticeSummoner:: ApprenticeSummoner(int p):Minion{name18, cost18,
                 description18, p, AP18,DP18, activationCost18}{}
 
+std::vector<std::string>  ApprenticeSummoner::getAscii(){
+    return display_minion_activated_ability(name,cost,AP,DP,ac,description);
+}
+
 void ApprenticeSummoner::print() {
-    vector<string> display =  display_minion_activated_ability(name,cost,AP,DP,ac,description);
-    printCard(display);
+
+    printCard(getAscii());
 }

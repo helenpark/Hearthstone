@@ -12,5 +12,6 @@ class GiantStrength: public Enchantment { //concrete card
 public:
     GiantStrength(int p);
     void print() override;
+    std::vector<std::string> getAscii() override;
 };
 #endif

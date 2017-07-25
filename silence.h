@@ -11,5 +11,6 @@ class Silence: public Enchantment { //concrete card
 public:
     Silence(int p);
     void print() override;
+    std::vector<std::string> getAscii() override;
 };
 #endif

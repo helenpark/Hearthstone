@@ -14,6 +14,7 @@ class EarthElemental: public Minion { //concrete card
 public:
     EarthElemental(int p);
     void print() override;
+    std::vector<std::string> getAscii() override;
 };
 
 #endif

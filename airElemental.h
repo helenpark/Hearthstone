@@ -10,12 +10,13 @@
 #include "Minion.h"
 using namespace std;
 
-class Board; 
+class Board;
 
 class AirElemental: public Minion { //concrete card
 
 public:
     AirElemental(int p);
     void print() override;
+    std::vector<std::string> getAscii() override;
 };
 #endif

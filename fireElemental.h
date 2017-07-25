@@ -16,5 +16,6 @@ public:
     FireElemental(int p);
     void print() override;
     void useAbility(std::shared_ptr<Board> board=nullptr, std::shared_ptr<Minion> minion=nullptr);
+    std::vector<std::string> getAscii() override;
 };
 #endif

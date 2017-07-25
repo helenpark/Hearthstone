@@ -22,6 +22,7 @@ class Card { // abstract class
 
     void printCard(std::vector<std::string> display);
     virtual void print();
+    virtual std::vector<std::string> getAscii();
 
     friend std::ostream &operator<<(std::ostream &out, const Card &b);
 };

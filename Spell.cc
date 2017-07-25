@@ -6,8 +6,13 @@ using namespace std;
 Spell::Spell(string name, int cost,
       string description, int p):Card{name,cost,"Spell",description,p}{}
 
-void Spell::print(){
-    vector<string> display = display_spell(name, cost,description);
-    printCard(display);
+std::vector<std::string> Spell::getAscii() {
+    return display_spell(name, cost,description);
 }
+
+void Spell::print(){
+    printCard(getAscii());
+}
+
+
 

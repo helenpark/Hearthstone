@@ -14,6 +14,7 @@ public:
     Enchantment(string name, int cost, string description, int p);
 //	virtual void enchant(Card *card);
     void print()=0;
+    std::vector<std::string> getAscii()=0;
 	virtual ~Enchantment();
 
 };
