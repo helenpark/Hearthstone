@@ -152,6 +152,7 @@ int main(int argc, char *argv[]) {
              int i,j;
              cin >> i; 
              if (cin >> j) { // case: attack another minion
+             cout << "attacking minion... " << endl;
              	vector<shared_ptr<Minion>> died; // minions that die in this attack (note: max 2 minions)
              	died = curPlayer->myBoard->minionSlots[i]->attack(otherPlayer->myBoard->minionSlots[j]);
 			 	if (died[0] != nullptr) {
@@ -165,9 +166,9 @@ int main(int argc, char *argv[]) {
 			 		p2.myBoard->minionSlots.erase(p2.myBoard->minionSlots.begin() + j);
 			 	}
 			 } else { // case: attack the other player directly
+				cout << "attacking player... " << endl;
 				int otherHP = curPlayer->myBoard->minionSlots[i]->attack(otherPlayer);
 				cout << "the other player has " << otherHP << "left!" << endl; 
-
              }
              cout << "attack called" << endl;
         }
