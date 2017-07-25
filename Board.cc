@@ -1,5 +1,4 @@
 #include "Board.h"
-#include "Minion.h"
 #include <memory>
 
 #include "airElemental.h"
@@ -9,7 +8,6 @@
 #include "novicePyromancer.h"
 #include "apprenticeSummoner.h"
 #include "masterSummoner.h"
-#include "Ritual.h"
 
 Board::Board(int owner):owner{owner} {}
 
@@ -81,7 +79,7 @@ void Board::placeRitual(shared_ptr<Card> r){
 }
 
 //place a died minion in the grave
-void Board::placeGrave(shared_ptr<Card> m){
+void Board::placeGrave(shared_ptr<Minion> m){
     string name = m->getName();
 
     cout << "placed: " << name << " in the graveyard \n";

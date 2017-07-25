@@ -3,7 +3,9 @@ using namespace std;
 #include "Player.h"
 
 Minion::Minion(string name, int cost, string description, int p, int AP, int DP, int ac):
-	Card{name,cost,"Minion",description,p}, AP{AP}, DP{DP},ac{ac} {}
+	Card{name,cost,"Minion",description,p}, AP{AP}, DP{DP},ac{ac}, original(true) {
+	
+}
 
 vector<shared_ptr<Minion>> Minion::attack(shared_ptr<Minion> minion) {
    int targetHP = minion->getHit(AP);

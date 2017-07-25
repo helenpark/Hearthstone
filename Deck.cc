@@ -87,14 +87,14 @@ void Deck::initDeck(string filename) {
 		else if(name=="Silence")
             base.emplace_back(make_shared<Silence> (owner));
 
-		// else if(name=="Dark Ritual")
-//             base.emplace_back(make_shared<DarkRitual> (owner));
-// 
-// 		else if(name=="Aura of Power")
-//             base.emplace_back(make_shared<AuraOfPower> (owner));
-// 
-// 		else if(name=="Standstill")
-//             base.emplace_back(make_shared<Standstill> (owner));
+		 else if(name=="Dark Ritual")
+             base.emplace_back(make_shared<DarkRitual> (owner));
+ 
+ 		else if(name=="Aura of Power")
+             base.emplace_back(make_shared<AuraOfPower> (owner));
+ 
+ 		else if(name=="Standstill")
+             base.emplace_back(make_shared<Standstill> (owner));
 
 		else if(name=="Air Elemental")
             base.emplace_back(make_shared<AirElemental> (owner));

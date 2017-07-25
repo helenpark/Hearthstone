@@ -1,6 +1,9 @@
 #include "airElemental.h"
 #include "ascii_graphics.h"
+#include "Board.h"
 #include <vector>
+#include <memory>
+
 
 //testing
 
@@ -21,3 +24,4 @@ void AirElemental::print() {
     printCard(display);
 
 }
+

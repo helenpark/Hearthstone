@@ -19,9 +19,11 @@ using namespace std;
 int main(int argc, char *argv[]) {
 	string cmd;
 	string input;
-
-	Player p1, p2;
+	
+	// filler because turn is set to either 1 or 2, which would seg fault hard since there is only 0 and 1
+	Player filler, p1, p2;
 	vector<Player *> players;
+	players.push_back(&filler);
 	players.push_back(&p1);
 	players.push_back(&p2);
 	bool testing = false;
@@ -85,7 +87,9 @@ int main(int argc, char *argv[]) {
 
 	}
 	cout << endl;
-
+	// setting the opponents
+	p1.opponent = &p2;
+	p2.opponent = &p1;
 
 	//Deck t = Deck();
 	//t.initDeck("default.deck",p1);
@@ -128,30 +132,36 @@ int main(int argc, char *argv[]) {
 			curPlayer->drawCard();
 			//triggered start of turn abilities
 			}
+		curPlayer->turnEnd();
+		curPlayer->status();
 		otherPlayer = players[turn];
 		turn==1?turn=2:turn=1;
 		curPlayer = players[turn];
+		curPlayer->turnStart();
 		cout << "new turn: "<< turn << endl;
 		}
 
         else if (cmd=="quit"){
             done = true;
-            cout << "quit called" << endl;
+            cout << "quit called" << endl << endl;
         }
         else if (cmd=="draw") {
             if (testing){
                 turn==1?p1.drawCard():p2.drawCard();
-                cout << "draw called" << endl;
+                cout << "draw called" << endl << endl;
             }
         }
         else if (cmd=="discard"){
             if (testing){
                 int i;
-                iss >> i;
-
-                turn==1?p1.discard(i):p2.discard(i);
-                cout << "discard called" << endl;
+                if (iss >> i) {
+			turn==1?p1.discard(i):p2.discard(i);
+			cout << "discard called" << endl << endl;
+		} else {
+			cout << "Needs to be a number between 1 and 5" << endl;
+		}
             }
+		cout << "discard called" << endl << endl;
         }
 
         else if (cmd=="attack"){
@@ -191,15 +201,31 @@ int main(int argc, char *argv[]) {
 
 			 }
 			 cout << "9" << endl;
-			 cout << "attack called" << endl;
+			 cout << "attack called" << endl << endl;
 
 
         }
-		else if (cmd=="play"){
-            int i;
-            iss >> i;
-            turn==1?p1.play(i):p2.play(i);
-            cout << "play called" << endl;
+	else if (cmd=="play"){
+            int i, p, t;
+	    string temp;
+	    // check if the second command is actually and int
+            if (iss >> i) {
+	    	// if this doesnt go through, it means its only attacking the player, if it does go through its attacking a target
+		if (iss >> p) {
+			iss >> temp;
+			if (temp == "r") {
+				turn==1 ? p1.play(i, p, 'r') : p2.play(i, p, 'r');
+			} 
+			else if (stringstream(temp) >> t) {
+				turn==1 ? p1.play(i, p, t) : p2.play(i, p, t);
+			} else {
+				turn==1?p1.play(i):p2.play(i);
+			}
+		} else {
+			turn==1?p1.play(i):p2.play(i);
+		}
+	    }
+            cout << "play called" << endl << endl;
             // still need to implement the second option of play with i p t
              // int i,p,t;
         }
@@ -209,7 +235,7 @@ int main(int argc, char *argv[]) {
             int i;
             cin >> i;
             turn==1?p1.use(i):p2.use(i);
-            cout << "use called" << endl;
+            cout << "use called" << endl << endl;
         }
 
 
@@ -217,18 +243,18 @@ int main(int argc, char *argv[]) {
             int i;
             cin >> i;
             turn==1?p1.inspect(i):p2.inspect(i);
-            cout << "inspect called" << endl;
+            cout << "inspect called" << endl << endl;
         }
 
         else if (cmd=="hand"){
             turn==1?p1.hand():p2.hand();
-            cout << "hand called" << endl;
+            cout << "hand called" << endl << endl;
         }
 
         else if (cmd=="board"){
             p1.board();
             p2.board();
-            cout << "board called" << endl;
+            cout << "board called" << endl << endl;
         }
         else if (cmd=="t") { //testing cmd for board methods (Jenn)
 

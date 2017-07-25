@@ -1,4 +1,4 @@
-
+#include <iostream>
 #include "Board.h"
 #include "standstill.h"
 using namespace std;
@@ -14,11 +14,7 @@ Standstill:: Standstill(int p):Ritual{name3, cost3,
                 description3, p, activationCost3, charges3}{}
 
 
-void Standstill::activate(Player *player, Board *board, shared_ptr<Minion> minion){
-
-}
-/*
-void Standstill::activate(Player *player, Board *board, shared_ptr<Minion> minion){
+void Standstill::activate(Player *player, shared_ptr<Board> board, shared_ptr<Minion> minion){
     if(canActivate()){
         // this one is tricky since it probably need access to the board
 	// and the position of the minion that is played on the board
@@ -31,10 +27,11 @@ void Standstill::activate(Player *player, Board *board, shared_ptr<Minion> minio
 	int len = board->minionSlots.size();
 	for (int i = 0; i < len; i++) {
 		if (minion == board->minionSlots[i]) {
-			board->placeGrave(minionSlots[i]);
-			board->minionSlots.erase(minionSlots.begin() + i - 1);
+			board->placeGrave(board->minionSlots[i]);
+			cout << "Success" << endl << endl;
+			board->minionSlots.erase(board->minionSlots.begin() + i);
 		}
 	}
     }
 }
-*/
+

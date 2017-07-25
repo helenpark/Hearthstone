@@ -88,12 +88,15 @@ void Player::gainMagic(){
 }
 
 void Player::discard(int i){
-
+	// nice error messages
+	if (i > 5 || i < 1) {
+		cout << "You need to pick a number between 1 and 5" << endl;
+	}
     if (!hasCard(i)) {
         cout << "Can't give away something you don't have, try something else" << endl;
     }
     else {
-        myHand.erase(myHand.begin()+i);
+        myHand.erase(myHand.begin() + i - 1);
         cout << "now you only have " << myHand.size() << " left\n";
     }
 }
@@ -114,8 +117,9 @@ void Player::play(int i) {
             myBoard->placeRitual(t);
         }
         else if(type=="Minion") {
-             shared_ptr<Card> t = myHand[i-1];
+            shared_ptr<Card> t = myHand[i-1];
             myBoard->placeMinion(t);
+	    minionPlayed(static_pointer_cast<Minion>(myHand[i-1]));
         }
         else if (type=="Spell") {
                 // use spell
@@ -134,7 +138,7 @@ int Player::getHit(int AP) {
 }
 
 // overloaded play, plays the ith card on card t owned by player p
-void play (int i, int p, int t);
+void Player::play (int i, int p, int t) {}
 
 //use ith minion owned by the player
 void Player::use(int i){
@@ -154,4 +158,71 @@ void Player::board(){
 
 }
 
+void Player::turnEnd() {
+	cout << "called" << endl;
+	int len = myBoard->minionSlots.size();
+	for (int i = 0; i < len; i++) {
+		if (myBoard->minionSlots[i]->getName() == "Potion Seller"
+		    && myBoard->minionSlots[i]->original) {
+			myBoard->minionSlots[i]->ability->potionSeller(myBoard);
+		}
+	}
+}
 
+void Player::turnStart() {
+	if (myBoard->myRitual) {
+		if (myBoard->myRitual->getName() == "Dark Ritual") {
+			myBoard->myRitual->activate(this);
+		}
+	}
+}
+
+void Player::minionPlayed(shared_ptr<Minion> minion) {
+	if (myBoard->myRitual) {
+		if (myBoard->myRitual->getName() == "Aura of Power") {
+			myBoard->myRitual->activate(nullptr, nullptr, minion);
+		}
+		if (myBoard->myRitual->getName() == "Standstill") {
+			myBoard->myRitual->activate(nullptr, myBoard, minion);	
+		}
+	}
+	if (opponent->myBoard->myRitual) {
+		if (opponent->myBoard->myRitual->getName() == "Standstill") {
+			opponent->myBoard->myRitual->activate(nullptr, opponent->myBoard, minion);
+		}
+	}
+	int len = myBoard->minionSlots.size();	
+	for (int i = 0; i < len; i++) {
+		if (myBoard->minionSlots[i]->getName() == "Fire Elemental"
+		    && myBoard->minionSlots[i]->original) {
+			myBoard->minionSlots[i]->ability->fireElemental(minion);
+		}
+	}
+}
+
+void Player::minionDied() {
+	int len = myBoard->minionSlots.size();
+	for (int i = 0; i < len; i++) {
+		if (!myBoard->minionSlots[i]->original) {
+		}
+	}
+	 if (myBoard->myRitual->getName() == "") {}
+}
+
+void Player::status() {
+	cout << "Player : " << name << endl;
+	cout << "HP : " << HP << endl;
+	cout << "MP : " << MP << endl;
+	int len = myBoard->minionSlots.size();
+	cout << "Minios played :" << endl;
+	for (int i = 0; i < len; i++) {
+		cout << "Name : " << myBoard->minionSlots[i]->getName() << endl;
+		cout << "DP : " << myBoard->minionSlots[i]->DP << endl;
+		cout << "HP : " << myBoard->minionSlots[i]->AP << endl;
+	}
+	cout << endl;
+	if (myBoard->myRitual) {
+		cout << "Ritual Played : " << myBoard->myRitual->getName() << endl;
+	}
+	cout << endl;
+}

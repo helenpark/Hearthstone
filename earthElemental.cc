@@ -17,5 +17,5 @@ EarthElemental:: EarthElemental(int p):Minion{name14, cost14,
 void EarthElemental::print() {
     vector<string> display = display_minion_no_ability(name,cost,AP,DP);
     printCard(display);
-
 }
+

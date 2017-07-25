@@ -18,3 +18,4 @@ void FireElemental::print() {
     vector<string> display = display_minion_triggered_ability(name,cost,AP,DP,description);
     printCard(display);
 }
+

@@ -18,7 +18,7 @@ AuraOfPower:: AuraOfPower(int p):Ritual{name1, cost1,
                 description1, p, activationCost1, charges1}{}
 
 
-void  AuraOfPower::activate(Player *player, Board *board, shared_ptr<Minion> minion){
+void  AuraOfPower::activate(Player *player, shared_ptr<Board> board, shared_ptr<Minion> minion){
     if(canActivate()){
         // change the MP and AP values by +1
 	// probably need to access a method from minion to gain MP/AP

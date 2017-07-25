@@ -15,5 +15,6 @@ class FireElemental: public Minion { //concrete card
 public:
     FireElemental(int p);
     void print() override;
+    void useAbility(std::shared_ptr<Board> board=nullptr, std::shared_ptr<Minion> minion=nullptr);
 };
 #endif
