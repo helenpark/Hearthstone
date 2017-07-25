@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 #include <fstream>
 #include "Board.h"
 #include "Player.h"
@@ -17,6 +18,7 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
 	string cmd;
+	string input;
 
 	Player p1, p2;
 	vector<Player *> players;
@@ -92,7 +94,10 @@ int main(int argc, char *argv[]) {
 	bool done = false;
 	while (!done){
 
-		cin >> cmd;
+		getline(cin, input);
+		istringstream iss(input);
+	    string cmd;
+    	iss >> cmd;
 		if (cin.eof()) break;
 
 		if  (cmd=="help") {
@@ -149,39 +154,56 @@ int main(int argc, char *argv[]) {
         }
 
         else if (cmd=="attack"){
-             int i,j;
-             cin >> i; 
-             if (cin >> j) { // case: attack another minion
-             cout << "attacking minion... " << endl;
-             	vector<shared_ptr<Minion>> died; // minions that die in this attack (note: max 2 minions)
-             	died = curPlayer->myBoard->minionSlots[i]->attack(otherPlayer->myBoard->minionSlots[j]);
-			 	if (died[0] != nullptr) {
-			 		cout << "My minion - " << curPlayer->myBoard->minionSlots[i]->name << "has died" << endl; 
-			 		p1.myBoard->placeGrave(p1.myBoard->minionSlots[i]);
-			 		p1.myBoard->minionSlots.erase(p1.myBoard->minionSlots.begin() + i);
-			 	}
-			 	if (died[1] != nullptr) {
-			 		cout << "Their minion - " << otherPlayer->myBoard->minionSlots[j]->name << "has died" << endl; 
-			 		p2.myBoard->placeGrave(p2.myBoard->minionSlots[j]);
-			 		p2.myBoard->minionSlots.erase(p2.myBoard->minionSlots.begin() + j);
-			 	}
+        	 int i, j;
+        	 iss >> i;
+        	 cout << "1" << endl;
+             // invalid input
+             cout << "#minions played = " << curPlayer->myBoard->minionSlots.size() << endl;
+			 shared_ptr<Minion> myMinion = curPlayer->myBoard->minionSlots[i-1];
+			 cout << "3" << endl;
+			 if (iss >> j) { // case: attack another minion
+			 cout << "attacking minion... " << endl;
+				cout << "4" << endl;
+				shared_ptr<Minion> oppMinion = otherPlayer->myBoard->minionSlots[j-1];
+			
+				// minions that die in this attack (note: max 2 minions)
+				vector<shared_ptr<Minion>> deadMinions = myMinion->attack(oppMinion);
+			
+				if (deadMinions[0] != nullptr) {
+					cout << "5" << endl;
+					cout << "My minion - " << myMinion->name << "has died" << endl; 
+					p1.myBoard->placeGrave(myMinion);
+					p1.myBoard->minionSlots.erase(p1.myBoard->minionSlots.begin() + i-1);
+				}
+				if (deadMinions[1] != nullptr) {
+					cout << "6" << endl;
+					cout << "Their minion - " << oppMinion->name << "has died" << endl; 
+					p2.myBoard->placeGrave(oppMinion);
+					p2.myBoard->minionSlots.erase(p2.myBoard->minionSlots.begin() + j-1);
+				}
+				cout << "7" << endl;
 			 } else { // case: attack the other player directly
+				cout << "8" << endl;
 				cout << "attacking player... " << endl;
-				int otherHP = curPlayer->myBoard->minionSlots[i]->attack(otherPlayer);
+				int otherHP = myMinion->attack(otherPlayer);
 				cout << "the other player has " << otherHP << "left!" << endl; 
-             }
-             cout << "attack called" << endl;
+		 
+			 }
+			 cout << "9" << endl;
+			 cout << "attack called" << endl;
+
+			
         }
-        else if (cmd=="play"){
+		else if (cmd=="play"){
             int i;
             cin >> i;
             turn==1?p1.play(i):p2.play(i);
             cout << "play called" << endl;
             // still need to implement the second option of play with i p t
-             //  int i,p,t;
+             // int i,p,t;
         }
 
-        else if (cmd=="use"){
+        else if (cmd=="use") {
 
             int i;
             cin >> i;
