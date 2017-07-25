@@ -6,6 +6,7 @@
 
 class Minion;
 class Board;
+class Player;
 
 class Ability {
 public:
@@ -22,6 +23,10 @@ public:
 	void apprenticeSummoner(std::shared_ptr<Board> boad);
 	// Summon 3 air elemental to the board
 	void masterSummoner(std::shared_ptr<Board> board);
+	// directly attack the player for half of the minions AP
+	void shieldPierce(Player *player, int AP);
+	// choose one card from the opponents hand and discard it
+	void graveKeeper(Player *player, std::shared_ptr<Board> board);
 	// ctor for ability
 	Ability(std::string name, int cost);
 };

@@ -25,7 +25,7 @@ public:
 	int DP; //defense points
 	int ac; //activation cost for minions that have activated abilities
 	bool original; // used for added ability enchantments
-	Ability *ability;
+	std::shared_ptr<Ability> ability;
     // use minion to attack, return true if minion dies after attack, false if minion lives after attack
 	vector<shared_ptr<Minion>> attack(shared_ptr<Minion> minion);
 	// minion attacks the opponent, grab how much the minion can hit for

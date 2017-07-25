@@ -1,11 +1,9 @@
 #include "Minion.h"
-using namespace std;
 #include "Player.h"
+using namespace std;
 
 Minion::Minion(string name, int cost, string description, int p, int AP, int DP, int ac):
-	Card{name,cost,"Minion",description,p}, AP{AP}, DP{DP},ac{ac}, original(true) {
-
-}
+	Card{name,cost,"Minion",description,p}, AP{AP}, DP{DP},ac{ac}, original(true), ability(make_shared<Ability>(name, ac)) {}
 
 vector<shared_ptr<Minion>> Minion::attack(shared_ptr<Minion> minion) {
    int targetHP = minion->getHit(AP);
@@ -43,4 +41,4 @@ int Minion::getHit(int ap) {
    return DP;
 }
 
-Minion::~Minion(){}
+Minion::~Minion() {}

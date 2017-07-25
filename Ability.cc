@@ -2,6 +2,8 @@
 #include "airElemental.h"
 #include "Minion.h"
 #include "Board.h"
+#include "Player.h"
+#include <sstream>
 #include <vector>
 #include <string>
 #include <iostream>
@@ -62,4 +64,30 @@ void Ability::masterSummoner(shared_ptr<Board> board) {
 void Ability::apprenticeSummoner(shared_ptr<Board> board) {
 	cout << "Aprrentice Summoner ability used" << endl;
 	board->minionSlots.emplace_back(make_shared<AirElemental>(1));
+}
+
+void Ability::shieldPierce(Player *player, int AP) {
+	player->HP -= AP;
+}
+
+void Ability::graveKeeper(Player *player, shared_ptr<Board> board){
+	cout << "choose a card to pick from the opponents hand to discard" << endl;
+	string num;
+	stringstream ss;
+	cin >> num;
+	ss << num;
+	int n;
+	int size = player->myHand.size();
+	while (!ss >> n && n >= 1 && n <= size) {
+		cout << "need to pick a card thats actually in there hand" << endl;
+		cin >> num;
+		ss << num;
+	}
+	// if its a minion place it into the grave yard and discard
+	if (player->myHand[n]->type == "Minion") {
+		board->placeGrave(static_pointer_cast<Minion>(player->myHand[n]));
+		player->discard(n);
+	} else {
+		player->discard(n);
+	}
 }
