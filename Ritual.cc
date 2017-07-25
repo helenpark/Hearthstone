@@ -9,6 +9,3 @@ bool Ritual::canActivate(){
     return (charges - activationCost) > 0;
 }
 
-Ritual::~Ritual(){
-   // delete ability;
-}

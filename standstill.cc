@@ -14,7 +14,8 @@ Standstill:: Standstill(int p):Ritual{name3, cost3,
                 description3, p, activationCost3, charges3}{}
 
 
-Standstill::void useAbility(Target *t=nullptr){
+
+void Standstill::activate(Player *player, Board *board, shared_ptr<Minion> minion){
     if(canActivate()){
         // this one is tricky since it probably need access to the board
 	// and the position of the minion that is played on the board 

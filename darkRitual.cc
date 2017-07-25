@@ -1,5 +1,10 @@
-
 #include "darkRitual.h"
+#include "Minion.h"
+#include "Board.h"
+#include "Player.h"
+#include <memory>
+#include <iostream>
+#include <string>
 using namespace std;
 
 string name2 = "Dark Ritual";
@@ -14,11 +19,8 @@ DarkRitual:: DarkRitual(int p):Ritual{name2, cost2,
 
 
 
-DarkRitual::void useAbility(Target *t=nullptr){
+void DarkRitual::activate(Player *player, Board *board, shared_ptr<Minion> minion){
     if(canActivate()){
-	// t should be a pointer to a player, so that it gains MP
-        t->gainMP();
-        charges -= activationCost;
     }
 }
 

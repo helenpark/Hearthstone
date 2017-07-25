@@ -9,12 +9,8 @@ class Player;
 
 Card::Card(std::string name, int cost, std::string type,
       std::string description, int p): name{name},
-      cost{cost}, type{type}, description{description}, owner{p}{
+      cost{cost}, type{type}, description{description}, owner{p}{ }
 
-      }
-Card::~Card(){
-   // delete Owner;
-}
 
 string Card::getName(){
     return name;

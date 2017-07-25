@@ -21,7 +21,6 @@ class Card { // abstract class
 	int getCost();
 
 
-	virtual ~Card()=0;
     friend std::ostream &operator<<(std::ostream &out, const Card &b);
 };
 
