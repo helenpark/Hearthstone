@@ -27,11 +27,9 @@ vector<shared_ptr<Minion>> Minion::attack(shared_ptr<Minion> minion) {
    return died;
 }
 
-bool Minion::attack(Player *player) {
+int Minion::attack(Player *player) {
    int finalHp = player->getHit(AP);
-   if (finalHp > 0) return false;
-	// TODO: Terminate game -> player possesing this card wins!
-	return true;
+   return finalHp;
 }
 
 void Minion::die() {

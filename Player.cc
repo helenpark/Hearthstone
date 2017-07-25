@@ -298,3 +298,12 @@ void Player::status() {
 	}
 	cout << endl;
 }
+
+void Player::winGame() {
+	cout << " ********** GAME OVER ********** " << endl;
+	cout << "  WINNER: "<< name << endl;
+}
+
+
+
+

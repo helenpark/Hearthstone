@@ -29,7 +29,7 @@ public:
     // use minion to attack, return true if minion dies after attack, false if minion lives after attack
 	vector<shared_ptr<Minion>> attack(shared_ptr<Minion> minion);
 	// minion attacks the opponent, grab how much the minion can hit for
-	bool attack(Player *player);
+	int attack(Player *player);
 
 	// use minions ability (feed in all possible parameters to make life easy)
 	// virtual void use(Board *board, Player *player, Minion *minion) = 0

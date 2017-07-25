@@ -84,6 +84,8 @@ public:
     void minionDied();
     // the status of the player as of right now
     void status();
+    // win Game -> output game won messages
+    void winGame();
 };
 #endif
 
