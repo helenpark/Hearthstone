@@ -18,7 +18,7 @@ vector<shared_ptr<Minion>> Minion::attack(shared_ptr<Minion> minion) {
    	died.push_back(nullptr);
    }
 
-   if (targetHP < 0) {
+   if (targetHP <= 0) {
 	died.push_back(minion);
    } else {
    	died.push_back(nullptr);
@@ -37,7 +37,7 @@ void Minion::die() {
 }
 
 int Minion::getHit(int ap) {
-   //cout << "I am " << name << ". Orignally I have: "<< DP << " lives.\n";
+   //cscout << "I am " << name << ". Orignally I have: "<< DP << " lives.\n";
    DP = DP - ap;
    //cout << "Now I have " << DP <<endl;
    return DP;

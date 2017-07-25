@@ -36,6 +36,8 @@ class Board {
         void gainCharge(int i);
         //return top minion
         shared_ptr<Card> top();
+        // checks for any dead minions; removes from board and places in graveyeard
+        void checkDead();
 };
 
 #endif

@@ -191,7 +191,11 @@ public:
 	//standard input loop
 	bool done = false;
 	while (!done){
-
+		// ************** START OF TURN *****************
+		
+		// RITUALS
+		//curPlayer->myBoard->myRitual->activate() -> TODO NEED STANLEY TO INTEGRATE HERE
+		
 		getline(cin, input);
 		istringstream iss(input);
 	    string cmd;
@@ -261,30 +265,17 @@ public:
         else if (cmd=="attack"){
         	 int i, j;
         	 iss >> i;
-             // invalid input
-             // cout << "#minions played = " << curPlayer->myBoard->minionSlots.size() << endl;
+             
 			 shared_ptr<Minion> myMinion = curPlayer->myBoard->minionSlots[i-1];
 			 if (iss >> j) { // case: attack another minion
 			 cout << "attacking minion... " << endl;
 				//cout << "4" << endl;
-				shared_ptr<Minion> oppMinion = otherPlayer->myBoard->minionSlots[j-1];
-				//cout << "4.25" << endl;
-				// minions that die in this attack (note: max 2 minions)
-				vector<shared_ptr<Minion>> deadMinions = myMinion->attack(oppMinion);
-				//cout << "4.5" << endl;
-				if (deadMinions[0] != nullptr) {
-					//cout << "5" << endl;
-					cout << "My minion - " << myMinion->name << "has died" << endl;
-					p1.myBoard->placeGrave(myMinion);
-					p1.myBoard->minionSlots.erase(p1.myBoard->minionSlots.begin() + i-1);
-				}
-				if (deadMinions[1] != nullptr) {
-					//cout << "6" << endlcs
-					cout << "Their minion - " << oppMinion->name << "has died" << endl;
-					p2.myBoard->placeGrave(oppMinion);
-					p2.myBoard->minionSlots.erase(p2.myBoard->minionSlots.begin() + j-1);
-				}
-				//cout << "7" << endl;
+				shared_ptr<Minion> oppMinion = otherPlayer->myBoard->minionSlots[j-1];				
+				myMinion->attack(oppMinion);
+				
+				p1.myBoard->checkDead();
+				p2.myBoard->checkDead();
+
 			 } else { // case: attack the other player directly
 				cout << "8" << endl;
 				cout << "attacking player... " << endl;
@@ -320,6 +311,10 @@ public:
 
             // still need to implement the second option of play with i p t
              // int i,p,t;
+             
+             
+             p1.myBoard->checkDead();
+			p2.myBoard->checkDead();
         }
 
         else if (cmd=="use") {
@@ -328,6 +323,10 @@ public:
             iss >> i;
             turn==1?p1.use(i):p2.use(i);
             cout << "use called" << endl << endl;
+            
+            
+            p1.myBoard->checkDead();
+			p2.myBoard->checkDead();
         }
 
 
