@@ -1,5 +1,6 @@
-
+#include <iostream>
 #include "raiseDead.h"
+
 using namespace std;
 
 string name11 = "Raise Dead";

@@ -10,5 +10,6 @@ class Standstill: public Ritual { //concrete card
 
 public:
     Standstill(int p);
+
 };
 #endif

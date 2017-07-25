@@ -15,13 +15,16 @@ class Card { // abstract class
 	int owner; //player1 or player2
 	Card(std::string name, int cost, std::string type,
     std::string description,  int p);
-	std::string getName();  
+	std::string getName();
 	std::string getDescription();
 	std::string getType();
 	int getCost();
 
+	void printCard(std::vector<std::string> display);
 
 	virtual ~Card()=0;
+	virtual void print();
+
     friend std::ostream &operator<<(std::ostream &out, const Card &b);
 };
 

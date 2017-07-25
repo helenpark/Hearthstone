@@ -14,5 +14,6 @@ class PotionSeller: public Minion { //concrete card
 
 public:
     PotionSeller(int p);
+    void print() override;
 };
 #endif

@@ -14,5 +14,6 @@ class NovicePyromancer: public Minion { //concrete card
 
 public:
     NovicePyromancer(int p);
+    void print() override;
 };
 #endif

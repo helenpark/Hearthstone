@@ -17,6 +17,7 @@ public:
 
     bool canActivate();
   //  virtual void useAbility(Target *t=nullptr)=0;
+    void print() override;
 	virtual ~Ritual();
 
 };

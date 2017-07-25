@@ -1,4 +1,7 @@
 #include "magicFatigue.h"
+#include <iostream>
+#include <vector>
+#include "ascii_graphics.h"
 using namespace std;
 
 string name5 = "Magic Fatigue";
@@ -8,3 +11,8 @@ string description5 = "Enchanted minion's activated ability costs 2 more";
 
 MagicFatigue:: MagicFatigue(int p):Enchantment{name5, cost5,
                 description5, p}{}
+
+void MagicFatigue::print() {
+    vector<string> display = display_enchantment(name,cost,description);
+    printCard(display);
+}
