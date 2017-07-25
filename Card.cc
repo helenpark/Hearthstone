@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <memory>
+#include "ascii_graphics.h"
 
 using namespace std;
 class Player;
@@ -35,7 +36,9 @@ void Card::printCard(vector<string> display){
 }
 void Card::print(){}
 
-vector<string> Card::getAscii(){}
+vector<string> Card::getAscii(){
+    return CARD_TEMPLATE_BORDER;
+}
 
 ostream &operator<<(ostream &out, const Card &b){
     out << "This card is: " << b.name << endl;

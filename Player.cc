@@ -175,56 +175,115 @@ void Player::inspect(int i){
         myBoard->minionSlots[i-1]->print();
     }
 }
+vector<string> display_Ritual_Player_Grave(shared_ptr<Card> rp, vector<string> p1,
+                                           shared_ptr<Board> b) {
+    vector<string> display;
+    vector<string> r,g;
+    if (rp) {
+        r = rp->getAscii();
+    }else {
+        r = CARD_TEMPLATE_BORDER;
+    }
+
+    if (b->grave.empty()) {
+        g = CARD_TEMPLATE_BORDER;
+    }
+    else {
+        g = b->top()->getAscii();
+    }
+    for (int i=0; i<11; i++) {
+        string line;
+        line += r[i];
+        line += CARD_TEMPLATE_BORDER[i];
+        line += p1[i];
+        line += CARD_TEMPLATE_BORDER[i];
+        line += g[i];
+        display.emplace_back(line);
+    }
+    return display;
+}
+
+vector<string> displayRow (vector<shared_ptr<Minion>> msg) {
+    int i = 0;
+    int j = msg.size();
+
+        vector<string> display;
+        vector <vector<string>> displayHand;
+        int len = 11;
+
+        while (i<j) {
+            displayHand.emplace_back(msg[i]->getAscii());
+            ++i;
+        }
+        while (i!=5) {
+             displayHand.emplace_back(CARD_TEMPLATE_BORDER);
+             ++i;
+        }
+
+        for (int m=0; m<len; m++) {
+            string line;
+            for (int b=0; b<5; b++) {
+                line += displayHand[b][m];
+            }
+            display.emplace_back(line);
+        }
+
+    return display;
+}
+
+vector<string> displayRow (vector<shared_ptr<Card>> msg) {
+    int i = 0;
+    int j = msg.size();
+
+        vector<string> display;
+        vector <vector<string>> displayHand;
+        int len = 11;
+
+        while (i<j) {
+            displayHand.emplace_back(msg[i]->getAscii());
+            ++i;
+        }
+        while (i!=5) {
+             displayHand.emplace_back(CARD_TEMPLATE_BORDER);
+             ++i;
+        }
+
+        for (int m=0; m<len; m++) {
+            string line;
+            for (int b=0; b<5; b++) {
+                line += displayHand[b][m];
+            }
+            display.emplace_back(line);
+        }
+
+    return display;
+}
 //display the hand
 void Player::hand (){
-     for(vector<int>::size_type i = 0; i != myHand.size(); i++) {
-         (myHand[i]->print());
+    int j = myHand.size();
+    if (j!=0) {
+        vector<string> display = displayRow(myHand);
+        print(display);
+    } else {
+        cout << "You don't have any cards on your hand.\n";
     }
 }
 //display the board
 void Player::board(int i){
     if (i==1){ //display player1's board
-        cout << "Ritual: " <<endl;
-        if (myBoard->myRitual) {
-            myBoard->myRitual->print();
-        }
-        cout << "___________________" << endl;
-        vector<string> display = display_player_card(num,name,HP,MP);
-        print(display);
-
-        cout << "Graveyard: " << endl;
-        if (!myBoard->grave.empty()) {
-            myBoard->top()->print();
-        }
-        cout << "___________________" << endl;
-        cout << "Minion Slots" << endl;
-        int numOfMinions = myBoard->minionSlots.size();
-        for (int i=0; i<numOfMinions; ++i) {
-            myBoard->minionSlots[i]->print();
-        }
+        vector<string> p = display_player_card(num,name,HP,MP);
+        //display grave
+        print(display_Ritual_Player_Grave(myBoard->myRitual,p,myBoard));
+        //display minions
+        print(displayRow(myBoard->minionSlots));
 
     }
     else if (i==2){ //display player2's board
-
-        cout << "Minion Slots" << endl;
-        int numOfMinions = myBoard->minionSlots.size();
-        for (int i=0; i<numOfMinions; ++i) {
-            myBoard->minionSlots[i]->print();
-        }
-          cout << "___________________" << endl;
-         cout << "Ritual: " <<endl;
-        if (myBoard->myRitual) {
-            myBoard->myRitual->print();
-        }
-        cout << "___________________" << endl;
-        vector<string> display = display_player_card(num,name,HP,MP);
-        print(display);
-        cout << "Graveyard: " << endl;
-        if (!myBoard->grave.empty()) {
-            myBoard->top()->print();
-        }
-
-
+         //display minions
+        print(displayRow(myBoard->minionSlots));
+        vector<string> p = display_player_card(num,name,HP,MP);
+        //display grave
+        print(display_Ritual_Player_Grave(myBoard->myRitual,p,myBoard));
     }
 }
 
