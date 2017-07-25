@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -28,6 +27,7 @@ int main(int argc, char *argv[]) {
 	bool testing = false;
 	int turn = 1;
 	Player *curPlayer = &p1; // alternative, notation to above line of code (Helen)
+	Player *otherPlayer = &p2;
 	vector<shared_ptr<Card>> hand;
 
 	// executing the arguments provided to main
@@ -128,6 +128,7 @@ int main(int argc, char *argv[]) {
 			curPlayer->drawCard();
 			//triggered start of turn abilities
 			}
+		otherPlayer = players[turn];
 		turn==1?turn=2:turn=1;
 		curPlayer = players[turn];
 		cout << "new turn: "<< turn << endl;
@@ -192,7 +193,6 @@ int main(int argc, char *argv[]) {
 			 cout << "attack called" << endl;
 
 			
-
         }
 		else if (cmd=="play"){
             int i;
@@ -253,15 +253,15 @@ int main(int argc, char *argv[]) {
             catch (string msg) {
                 cout << msg <<endl;
             } */
-            shared_ptr<Card> r1 = make_shared<DarkRitual>(1);
-            shared_ptr<Ritual> r2 = make_shared<AuraOfPower>(1);
-            shared_ptr<Ritual> r3 = make_shared<Standstill>(1);
-            t->placeRitual(r1);
-            t->placeRitual(r2);
-            t->placeRitual(r3);
+            
+            // TODO: uncomment -> this code currently does not compile.
+            // shared_ptr<Card> r1 = make_shared<DarkRitual>(1);
+//             shared_ptr<Ritual> r2 = make_shared<AuraOfPower>(1);
+//             shared_ptr<Ritual> r3 = make_shared<Standstill>(1);
+//             t->placeRitual(r1);
+//             t->placeRitual(r2);
+//             t->placeRitual(r3);
         }
-
-
 	}
 }
-
+	

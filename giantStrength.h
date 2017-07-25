@@ -11,6 +11,5 @@ class GiantStrength: public Enchantment { //concrete card
 
 public:
     GiantStrength(int p);
-    void print() override;
 };
 #endif

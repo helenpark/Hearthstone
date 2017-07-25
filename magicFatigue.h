@@ -10,6 +10,5 @@ class MagicFatigue: public Enchantment { //concrete card
 
 public:
     MagicFatigue(int p);
-    void print() override;
 };
 #endif

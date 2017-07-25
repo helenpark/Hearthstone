@@ -14,7 +14,7 @@ using namespace std;
 class Player;
 class Enchantment;
 
-class Minion: public Card { //abstract
+class Minion: public Card, public std::enable_shared_from_this<Minion> { //abstract
 
 //	std::vector<typename std::shared_ptr<typename Enchantment>> buffs; // enchantments applied to minion
 //	Ability *ability;
@@ -22,12 +22,11 @@ class Minion: public Card { //abstract
 public:
     int AP; //attack points
 	int DP; //defense points
-	int ac; //activation cost for minions that have activated abilities
 	// use minion to attack, return true if minion dies after attack, false if minion lives after attack
-	bool attack(Minion *minion);
+	vector<shared_ptr<Minion>> attack(shared_ptr<Minion> minion);
 	// minion attacks the opponent, grab how much the minion can hit for
 	bool attack(Player *player);
-
+	
 	// use minions ability (feed in all possible parameters to make life easy)
 	// virtual void use(Board *board, Player *player, Minion *minion) = 0;
 	// adds an enchantment on to the minion
@@ -37,15 +36,13 @@ public:
 	// TODO: implement ability: decide whether to implement in minion.cc (call enchant class) or each individual minion
 	//virtual Ability::AbilityType getType();
 	// function extended from abstract parent class: Target. Describes how minion takes damage
-
+	
 	int getHit(int ap);
-
+	void die(); // take off of board and put in graveyard
 	// use the minions
-
+	
 	Minion(string name, int cost,
       string description, int p, int AP, int DP, int ac);
-
-    void print()=0;
 	virtual ~Minion();
 
 };

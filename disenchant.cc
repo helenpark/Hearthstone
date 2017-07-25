@@ -1,7 +1,5 @@
 
 #include "disenchant.h"
-#include <iostream>
-
 using namespace std;
 
 string name10 = "Disenchant";

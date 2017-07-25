@@ -1,6 +1,4 @@
 #include "unsummon.h"
-#include <iostream>
-
 using namespace std;
 
 string name8 = "Unsummon";
@@ -10,5 +8,3 @@ string description8 = "Put target inion on the bottom of its owner's deck";
 
 Unsummon:: Unsummon(int p):Spell{name8, cost8,
                 description8, p}{}
-
-

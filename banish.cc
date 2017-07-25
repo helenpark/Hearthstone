@@ -1,7 +1,4 @@
 #include "banish.h"
-#include <iostream>
-
-
 using namespace std;
 
 string name7 = "Banish";
@@ -11,4 +8,3 @@ string description7 = "Destroy target minion or ritual";
 
 Banish:: Banish(int p):Spell{name7, cost7,
                 description7, p}{}
-

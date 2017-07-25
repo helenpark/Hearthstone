@@ -10,6 +10,5 @@ class Silence: public Enchantment { //concrete card
 
 public:
     Silence(int p);
-    void print() override;
 };
 #endif

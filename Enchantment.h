@@ -13,8 +13,6 @@ class Enchantment: public Card { //abstract
 public:
     Enchantment(string name, int cost, string description, int p);
 //	virtual void enchant(Card *card);
-
-    void print()=0;
 	virtual ~Enchantment();
 
 };
