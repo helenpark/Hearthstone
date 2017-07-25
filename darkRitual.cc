@@ -21,6 +21,7 @@ DarkRitual:: DarkRitual(int p):Ritual{name2, cost2,
 
 void DarkRitual::activate(Player *player, Board *board, shared_ptr<Minion> minion){
     if(canActivate()){
+	player->MP += 1;
     }
 }
 

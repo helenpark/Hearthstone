@@ -25,6 +25,13 @@ void Standstill::activate(Player *player, Board *board, shared_ptr<Minion> minio
 	// or
 	// board->destroy(opponentPlayerNumber, positionOfMinion);
         charges -= activationCost;
+	int len = board->minionSlots.size();
+	for (int i = 0; i < len; i++) {
+		if (minion == minionSlots[i]) {
+			board->placeGrave(minionSlots[i]);
+			board->minionSlots.erase(minionSlots.begin() + i - 1);	
+		}
+	}
     }
 }
 

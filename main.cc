@@ -231,7 +231,7 @@ int main(int argc, char *argv[]) {
         }
         else if (cmd=="t") { //testing cmd for board methods (Jenn)
 
-         Board *t = new Board(1);
+         //Board *t = new Board(1);
           /*   shared_ptr<Minion> m = make_shared<EarthElemental>(1);
             shared_ptr<Minion> b = make_shared<FireElemental>(1);
               t->placeGrave(m);
