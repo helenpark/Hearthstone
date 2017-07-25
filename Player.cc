@@ -147,16 +147,8 @@ void Player::inspect(int i){
 //display the hand
 void Player::hand (){
      for(vector<int>::size_type i = 0; i != myHand.size(); i++) {
-
          (myHand[i]->print());
     }
-
-/*
-    for(vector<int>::size_type i = 0; i != myHand.size(); i++) {
-
-         cout << *(myHand[i]);
-    }
-*/
 }
 //display the board
 void Player::board(){
