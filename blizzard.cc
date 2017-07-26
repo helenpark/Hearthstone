@@ -12,7 +12,7 @@ string description12 = "Deal 2 damage to all minions";
 Blizzard:: Blizzard(int p):Spell{name12, cost12,
                 description12, p}{}
 
-void Blizzard::cast(shared_ptr<Board> myBoard,shared_ptr<Card> target, shared_ptr<Board> oppBoard){
+void Blizzard::cast(shared_ptr<Board> myBoard,int p,string t, shared_ptr<Board> oppBoard){
     int n = myBoard->minionSlots.size();
     for (int i=0; i<n; i++) {
         myBoard->minionSlots[i]->getHit(2);

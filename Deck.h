@@ -9,17 +9,18 @@
 using namespace std;
 class Deck {
     int owner;
+    string filename;
 	std::vector<std::shared_ptr<Card>> base;
 
 public:
-   Deck();
    Deck(int owner);
-   // ~Deck();
-/*
-	// shuffle deck, randomize order of cards
-    std::vector<Card*>  shuffle();
+   Deck(int owner,string filename);
 
-    //readd
+
+	// shuffle deck, randomize order of cards
+    void shuffle();
+
+ /*   //readd
     void readd();
 */
     // whether deck contains any cards or not

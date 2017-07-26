@@ -102,17 +102,17 @@ int main(int argc, char *argv[]) {
 
 	//standard input loop
 	bool done = false;
-	
+
 	// ************** START OF GAME *****************
-	
+
 	if (!testing) {
 		for (int i=0; i <4; i++) {
 			p1.drawCard();
 			p2.drawCard();
 		}
 	}
-	
-	
+
+
 	// display magic remaining to be used
 	cout << "Magic:";
 	for (int i=0; i < curPlayer->ML; i++) {
@@ -122,14 +122,14 @@ int main(int argc, char *argv[]) {
 		cout << " .";
 	}
 	cout << endl;
-	
+
 	while (!done){
-		
+
 		// ************** START OF TURN *****************
-		
+
 		// RITUALS
 		//curPlayer->myBoard->myRitual->activate() -> TODO NEED STANLEY TO INTEGRATE HERE
-		
+
 		getline(cin, input);
 		istringstream iss(input);
 	    string cmd;
@@ -164,22 +164,22 @@ int main(int argc, char *argv[]) {
 			curPlayer->drawCard();
 			//triggered start of turn abilities
 			}
-		
-		
+
+
 			curPlayer->turnEnd();
 			curPlayer->status();
 			otherPlayer = players[turn];
 			turn==1?turn=2:turn=1;
 			curPlayer = players[turn];
 			curPlayer->turnStart();
-	
+
 			// draw a card and gain a magic point
 			if (!testing) {
 				curPlayer->drawCard();
 				curPlayer->MP = curPlayer->MP + 1;
 				curPlayer->ML = curPlayer->MP;
 			}
-	
+
 			// display magic remaining to be used
 			cout << "Magic:";
 			for (int i=0; i < curPlayer->ML; i++) {
@@ -189,7 +189,7 @@ int main(int argc, char *argv[]) {
 				cout << " .";
 			}
 			cout << endl;
-	
+
 			cout << "new turn: "<< turn << endl;
 
 		}
@@ -220,14 +220,14 @@ int main(int argc, char *argv[]) {
         else if (cmd=="attack"){
         	 int i, j;
         	 iss >> i;
-             
+
 			 shared_ptr<Minion> myMinion = curPlayer->myBoard->minionSlots[i-1];
 			 if (iss >> j) { // case: attack another minion
 			 cout << "attacking minion... " << endl;
 				//cout << "4" << endl;
-				shared_ptr<Minion> oppMinion = otherPlayer->myBoard->minionSlots[j-1];				
+				shared_ptr<Minion> oppMinion = otherPlayer->myBoard->minionSlots[j-1];
 				myMinion->attack(oppMinion);
-				
+
 				p1.myBoard->checkDead();
 				p2.myBoard->checkDead();
 
@@ -250,11 +250,11 @@ int main(int argc, char *argv[]) {
 	    	// if this doesnt go through, it means its only attacking the player, if it does go through its attacking a target
                 if (iss >> p) {
                     iss >> temp;
-                    if (temp == "r") {
-                        turn==1 ? p1.play(i, p, 'r') : p2.play(i, p, 'r');
+                   if (temp == "r") {
+                    //    turn==1 ? p1.play(i, p, 'r') : p2.play(i, p, 'r');
                     }
                     else if (stringstream(temp) >> t) {
-                        turn==1 ? p1.play(i, p, t) : p2.play(i, p, t);
+                     //   turn==1 ? p1.play(i, p, t) : p2.play(i, p, t);
                     } else {
                         turn==1?p1.play(i):p2.play(i);
                     }
@@ -265,11 +265,11 @@ int main(int argc, char *argv[]) {
 
             // still need to implement the second option of play with i p t
              // int i,p,t;
-             
-             
+
+
             p1.myBoard->checkDead();
 			p2.myBoard->checkDead();
-			
+
 			// display magic remaining to be used
 			cout << "Magic Remaining:";
 			for (int i=0; i < curPlayer->ML; i++) {
@@ -292,10 +292,10 @@ int main(int argc, char *argv[]) {
                     cout << "1 " ;
                     if (temp == "r") {
                     	p==1? curPlayer->use(i, &p1, -1) : curPlayer->use(i, &p2, -1);
-                    	
+
                     }
                     else if (stringstream(temp) >> t) {
-                    	cout << "2 "; 
+                    	cout << "2 ";
                         p==1? curPlayer->use(i, &p1, t) : curPlayer->use(i, &p2, t);
                     } else {
                     	cout << "3 " ;
@@ -307,11 +307,11 @@ int main(int argc, char *argv[]) {
             }
 
             iss >> i;
-            turn==1?p1.use(i):p2.use(i);            
-            
+            turn==1?p1.use(i):p2.use(i);
+
             p1.myBoard->checkDead();
 			p2.myBoard->checkDead();
-			
+
 			// display magic remaining to be used
 			cout << "Magic Remaining:";
 			for (int i=0; i < curPlayer->ML; i++) {
@@ -321,7 +321,7 @@ int main(int argc, char *argv[]) {
 				cout << " .";
 			}
 			cout << endl;
-			
+
         }
 
 

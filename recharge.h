@@ -13,6 +13,6 @@ class Recharge: public Spell { //concrete card
 
 public:
     Recharge(int p);
-    void cast(shared_ptr<Board> myBoard,shared_ptr<Card> target=nullptr, shared_ptr<Board> oppBoard=nullptr) override;
+    void cast(shared_ptr<Board> myBoard,int p,string t, shared_ptr<Board> oppBoard) override;
 };
 #endif

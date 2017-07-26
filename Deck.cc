@@ -26,14 +26,25 @@
 #include "novicePyromancer.h"
 #include "apprenticeSummoner.h"
 #include "masterSummoner.h"
+#include <ctime>
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
 
 using namespace std;
-/*
-vector<Card*> Deck::shuffle(vector<Card*> cards) {
-	random_shuffle(base.begin(), base.end());
-}
 
-*/
+// shuffle deck, randomize order of cards
+void Deck::shuffle(){
+    int len = base.size();
+    int iSecret;
+    while(len!=0){
+        srand(time(NULL));
+        iSecret = rand() % len;
+        base.emplace_back(base[iSecret]);
+        len--;
+        base.erase(base.begin()+iSecret);
+    }
+}
 
 
 bool Deck::isEmpty() {
@@ -63,7 +74,7 @@ void Deck::initDeck(string filename) {
 		if (name=="Banish")
             base.emplace_back(make_shared<Banish> (owner));
 
-/*		else if(name=="Unsummon")
+		else if(name=="Unsummon")
             base.emplace_back(make_shared<Unsummon> (owner));
 
         else if(name=="Recharge")
@@ -72,13 +83,13 @@ void Deck::initDeck(string filename) {
 		else if(name=="Disenchant")
             base.emplace_back(make_shared<Disenchant> (owner));
 
-*/		else if(name=="Raise Dead")
+		else if(name=="Raise Dead")
             base.emplace_back(make_shared<RaiseDead> (owner));
 
 		else if(name=="Blizzard")
             base.emplace_back(make_shared<Blizzard> (owner));
 
-/*		else if(name=="Giant Strength")
+		else if(name=="Giant Strength")
             base.emplace_back(make_shared<GiantStrength> (owner));
 
 		else if(name=="Magic Fatigue")
@@ -87,7 +98,7 @@ void Deck::initDeck(string filename) {
 		else if(name=="Silence")
             base.emplace_back(make_shared<Silence> (owner));
 
-*/		 else if(name=="Dark Ritual")
+		 else if(name=="Dark Ritual")
              base.emplace_back(make_shared<DarkRitual> (owner));
 
  		else if(name=="Aura of Power")
@@ -115,13 +126,15 @@ void Deck::initDeck(string filename) {
             base.emplace_back(make_shared<ApprenticeSummoner> (owner));
 
 		else if(name=="Master Summoner")
-            base.emplace_back(make_shared<MasterSummoner> (owner)); 
+            base.emplace_back(make_shared<MasterSummoner> (owner));
 	}
 }
 
 
-Deck::Deck() {}
-
-Deck::Deck(int owner):owner{owner}{
+Deck::Deck(int owner):owner{owner} {
     initDeck("default.deck");
+}
+
+Deck::Deck(int owner,string filename):owner{owner},filename{filename}{
+    initDeck(filename);
 }
