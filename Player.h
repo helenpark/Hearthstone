@@ -12,14 +12,13 @@
 #include <memory>
 using namespace std;
 
-class Player {
+class Player : public std::enable_shared_from_this<Minion> {
 
 public:
 
     string name  = "no name";
     int num= 2; //player1 or player2
     Player *opponent;
-
 
 
     shared_ptr<Deck> myDeck = make_shared<Deck>(num);
@@ -30,6 +29,7 @@ public:
     int HP = 20;  //20 lives
     int MP = 3;   //2 magics
     int ML = MP;   //magic left
+    
 
     Player();
 	Player(std::string name, int n);
@@ -67,7 +67,8 @@ public:
     //use ith minion owned by the player
     void use(int i);
     //use ith minions ability on whichever target
-    void use(int i, int p, int t);
+    void use(int i, Player *p, int t);
+    
     //inspect ith minion owned
     void inspect(int i);
     //display the hand

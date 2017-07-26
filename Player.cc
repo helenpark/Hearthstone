@@ -207,8 +207,7 @@ void Player::use(int i){
 			return;
 		}
 		myBoard->minionSlots[i-1]->ability->masterSummoner(myBoard);
-	}
-	else if (myBoard->minionSlots[i-1]->ability->name == "Shield Pierce") {
+	} else if (myBoard->minionSlots[i-1]->ability->name == "Shield Pierce") {
 		myBoard->minionSlots[i-1]->ability->shieldPierce(opponent, myBoard->minionSlots[i]->AP);
 	} else {
 		cout << "This minion can't use this type of ability" << endl;
@@ -216,7 +215,27 @@ void Player::use(int i){
 }
 
 //use ith minions ability on whichever target
-void Player::use(int i, int p, int t) {}
+void Player::use(int i, Player *p, int t) {
+	cout << "4 "; 
+	int len = myBoard->minionSlots.size();
+	if (len == 0) {
+		cout << "You have no minions in play right now" << endl;
+	}
+	cout << "5 "; 
+	if (i < 1 || i > len) {
+		cout << "6 "; 
+		cout << "need to pick a number between 1 and " << len << endl;
+	} else if (myBoard->minionSlots[i-1]->ability->name == "Novice Pyromancer") {
+		if (t == -1) { // target ritual
+			cout << "Novice Pyromancer ability only applies to a minion!" << endl;
+		} else { // target minion
+			myBoard->minionSlots[i-1]->ability->fireElemental(p->myBoard->minionSlots[t-1]); 
+		}
+	} else {
+		cout << "This minion can't use this type of ability" << endl;
+	}
+	
+}
 
 //inspect ith minion owned
 void Player::inspect(int i){

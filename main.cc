@@ -165,31 +165,33 @@ int main(int argc, char *argv[]) {
 			//triggered start of turn abilities
 			}
 		
-		curPlayer->turnEnd();
-		curPlayer->status();
-		otherPlayer = players[turn];
-		turn==1?turn=2:turn=1;
-		curPlayer = players[turn];
-		curPlayer->turnStart();
 		
-		// draw a card and gain a magic point
-		if (!testing) {
-			curPlayer->drawCard();
-			curPlayer->MP = curPlayer->MP + 1;
-			curPlayer->ML = curPlayer->MP;
-		}
-		
-		// display magic remaining to be used
-		cout << "Magic:";
-		for (int i=0; i < curPlayer->ML; i++) {
-			cout << " o";
-		}
-		for (int i=0; i < (curPlayer->MP - curPlayer->ML); i++) {
-			cout << " .";
-		}
-		cout << endl;
-		
-		cout << "new turn: "<< turn << endl;
+			curPlayer->turnEnd();
+			curPlayer->status();
+			otherPlayer = players[turn];
+			turn==1?turn=2:turn=1;
+			curPlayer = players[turn];
+			curPlayer->turnStart();
+	
+			// draw a card and gain a magic point
+			if (!testing) {
+				curPlayer->drawCard();
+				curPlayer->MP = curPlayer->MP + 1;
+				curPlayer->ML = curPlayer->MP;
+			}
+	
+			// display magic remaining to be used
+			cout << "Magic:";
+			for (int i=0; i < curPlayer->ML; i++) {
+				cout << " o";
+			}
+			for (int i=0; i < (curPlayer->MP - curPlayer->ML); i++) {
+				cout << " .";
+			}
+			cout << endl;
+	
+			cout << "new turn: "<< turn << endl;
+
 		}
 
         else if (cmd=="quit"){
@@ -287,13 +289,16 @@ int main(int argc, char *argv[]) {
 	    	// if this doesnt go through, it means its only attacking the player, if it does go through its attacking a target
                 if (iss >> p) {
                     iss >> temp;
+                    cout << "1 " ;
                     if (temp == "r") {
-			int r = 'r';
-                        turn==1 ? p1.use(i, p, r) : p2.use(i, p, r);
+                    	p==1? curPlayer->use(i, &p1, -1) : curPlayer->use(i, &p2, -1);
+                    	
                     }
                     else if (stringstream(temp) >> t) {
-                        turn==1 ? p1.use(i, p, t) : p2.use(i, p, t);
+                    	cout << "2 "; 
+                        p==1? curPlayer->use(i, &p1, t) : curPlayer->use(i, &p2, t);
                     } else {
+                    	cout << "3 " ;
                         turn==1?p1.use(i):p2.use(i);
                     }
                 } else {
