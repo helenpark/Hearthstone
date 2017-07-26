@@ -65,6 +65,8 @@ public:
 
     //use ith minion owned by the player
     void use(int i);
+    //use ith minions ability on whichever target
+    void use(int i, int p, int t);
     //inspect ith minion owned
     void inspect(int i);
     //display the hand

@@ -105,7 +105,7 @@ void Deck::initDeck(string filename) {
 		else if(name=="Fire Elemental")
             base.emplace_back(make_shared<FireElemental> (owner));
 
-/*		else if(name=="Potion Seller")
+		else if(name=="Potion Seller")
             base.emplace_back(make_shared<PotionSeller> (owner));
 
 		else if(name=="Novice Pyromancer")
@@ -115,7 +115,7 @@ void Deck::initDeck(string filename) {
             base.emplace_back(make_shared<ApprenticeSummoner> (owner));
 
 		else if(name=="Master Summoner")
-            base.emplace_back(make_shared<MasterSummoner> (owner)); */
+            base.emplace_back(make_shared<MasterSummoner> (owner)); 
 	}
 }
 

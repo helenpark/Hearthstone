@@ -164,7 +164,37 @@ int Player::getHit(int AP) {
 
 //use ith minion owned by the player
 void Player::use(int i){
+	int len = myBoard->minionSlots.size();
+	if (len == 0) {
+		cout << "You have no minions in play right now" << endl;
+	}
+	if (i < 1 || i > len) {
+		cout << "need to pick a number between 1 and " << len << endl;
+	}
+	if (myBoard->minionSlots[i-1]->ability->name == "Apprentice Summoner") {
+		if (myBoard->minionSlots.size() ==  5) { 
+			cout << "Can't summon any more Air Elementals to the board" << endl;
+			return;
+		}
+		myBoard->minionSlots[i-1]->ability->apprenticeSummoner(myBoard);
+	} 
+	else if (myBoard->minionSlots[i-1]->ability->name == "Master Summoner") {
+		if (myBoard->minionSlots.size() == 5) {
+			cout <<  "Can't summon any more Air Elementals to the board" << endl;
+			return;
+		}
+		myBoard->minionSlots[i-1]->ability->masterSummoner(myBoard);
+	}
+	else if (myBoard->minionSlots[i-1]->ability->name == "Shield Pierce") {
+		myBoard->minionSlots[i-1]->ability->shieldPierce(opponent, myBoard->minionSlots[i]->AP);
+	} else {
+		cout << "This minion can't use this type of ability" << endl;
+	}
 }
+
+//use ith minions ability on whichever target
+void Player::use(int i, int p, int t) {}
+
 //inspect ith minion owned
 void Player::inspect(int i){
     int numOfMinions = myBoard->minionSlots.size();
@@ -175,115 +205,56 @@ void Player::inspect(int i){
         myBoard->minionSlots[i-1]->print();
     }
 }
-vector<string> display_Ritual_Player_Grave(shared_ptr<Card> rp, vector<string> p1,
-                                           shared_ptr<Board> b) {
-    vector<string> display;
-    vector<string> r,g;
-    if (rp) {
-        r = rp->getAscii();
-    }else {
-        r = CARD_TEMPLATE_BORDER;
-    }
-
-    if (b->grave.empty()) {
-        g = CARD_TEMPLATE_BORDER;
-    }
-    else {
-        g = b->top()->getAscii();
-    }
-    for (int i=0; i<11; i++) {
-        string line;
-        line += r[i];
-        line += CARD_TEMPLATE_BORDER[i];
-        line += p1[i];
-        line += CARD_TEMPLATE_BORDER[i];
-        line += g[i];
-        display.emplace_back(line);
-    }
-    return display;
-}
-
-vector<string> displayRow (vector<shared_ptr<Minion>> msg) {
-    int i = 0;
-    int j = msg.size();
-
-        vector<string> display;
-        vector <vector<string>> displayHand;
-        int len = 11;
-
-        while (i<j) {
-            displayHand.emplace_back(msg[i]->getAscii());
-            ++i;
-        }
-        while (i!=5) {
-             displayHand.emplace_back(CARD_TEMPLATE_BORDER);
-             ++i;
-        }
-
-        for (int m=0; m<len; m++) {
-            string line;
-            for (int b=0; b<5; b++) {
-                line += displayHand[b][m];
-            }
-            display.emplace_back(line);
-        }
-
-    return display;
-}
-
-vector<string> displayRow (vector<shared_ptr<Card>> msg) {
-    int i = 0;
-    int j = msg.size();
-
-        vector<string> display;
-        vector <vector<string>> displayHand;
-        int len = 11;
-
-        while (i<j) {
-            displayHand.emplace_back(msg[i]->getAscii());
-            ++i;
-        }
-        while (i!=5) {
-             displayHand.emplace_back(CARD_TEMPLATE_BORDER);
-             ++i;
-        }
-
-        for (int m=0; m<len; m++) {
-            string line;
-            for (int b=0; b<5; b++) {
-                line += displayHand[b][m];
-            }
-            display.emplace_back(line);
-        }
-
-    return display;
-}
 //display the hand
 void Player::hand (){
-    int j = myHand.size();
-    if (j!=0) {
-        vector<string> display = displayRow(myHand);
-        print(display);
-    } else {
-        cout << "You don't have any cards on your hand.\n";
+     for(vector<int>::size_type i = 0; i != myHand.size(); i++) {
+         (myHand[i]->print());
     }
 }
 //display the board
 void Player::board(int i){
     if (i==1){ //display player1's board
-        vector<string> p = display_player_card(num,name,HP,MP);
-        //display grave
-        print(display_Ritual_Player_Grave(myBoard->myRitual,p,myBoard));
-        //display minions
-        print(displayRow(myBoard->minionSlots));
+        cout << "Ritual: " <<endl;
+        if (myBoard->myRitual) {
+            myBoard->myRitual->print();
+        }
+        cout << "___________________" << endl;
+        vector<string> display = display_player_card(num,name,HP,MP);
+        print(display);
+
+        cout << "Graveyard: " << endl;
+        if (!myBoard->grave.empty()) {
+            myBoard->top()->print();
+        }
+        cout << "___________________" << endl;
+        cout << "Minion Slots" << endl;
+        int numOfMinions = myBoard->minionSlots.size();
+        for (int i=0; i<numOfMinions; ++i) {
+            myBoard->minionSlots[i]->print();
+        }
 
     }
     else if (i==2){ //display player2's board
-         //display minions
-        print(displayRow(myBoard->minionSlots));
-        vector<string> p = display_player_card(num,name,HP,MP);
-        //display grave
-        print(display_Ritual_Player_Grave(myBoard->myRitual,p,myBoard));
+
+        cout << "Minion Slots" << endl;
+        int numOfMinions = myBoard->minionSlots.size();
+        for (int i=0; i<numOfMinions; ++i) {
+            myBoard->minionSlots[i]->print();
+        }
+          cout << "___________________" << endl;
+         cout << "Ritual: " <<endl;
+        if (myBoard->myRitual) {
+            myBoard->myRitual->print();
+        }
+        cout << "___________________" << endl;
+        vector<string> display = display_player_card(num,name,HP,MP);
+        print(display);
+        cout << "Graveyard: " << endl;
+        if (!myBoard->grave.empty()) {
+            myBoard->top()->print();
+        }
+
+
     }
 }
 
