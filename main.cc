@@ -97,93 +97,6 @@ int main(int argc, char *argv[]) {
 	p2.opponent = &p1;
 
 	//Deck t = Deck();
-#ifndef _PLAYER_H__
-#define _PLAYER_H__
-
-#include "Board.h"
-#include "Deck.h"
-//#include "Grave.h"
-//#include "Ritual.h"
-#include "Minion.h"
-#include <vector>
-#include <string>
-#include <memory>
-using namespace std;
-
-class Player {
-
-public:
-
-    string name  = "no name";
-    int num= 2; //player1 or player2
-    Player *opponent;
-
-
-
-    shared_ptr<Deck> myDeck = make_shared<Deck>(num);
-    shared_ptr<Board> myBoard = make_shared<Board>(num);
-
-    vector<shared_ptr<Card>> myHand; //5 cards
-    vector<shared_ptr<Card>> played;
-    int HP = 20;  //20 lives
-    int MP = 3;   //3 magics
-
-    Player();
-	Player(std::string name, int n);
-
-	//copy ctor
-    Player (const Player &other);
-    //move ctor
-    Player (Player &&other);
-    //copy assignment operator
-    Player &operator=(const Player &other);
-    //move assignment operator
-    Player &operator=(Player &&other);
-	 //dtor
-	~Player();
-
-	// returns true if ith card is on hand
-	bool hasCard(int i);
-
-	// draw from the player's deck
-    void drawCard();
-    // gain 1 magic
-    void gainMagic();
-    // discard card on Hand
-    void discard(int i);
-    // orders minion i to attack the opposing player
-    void attack (int i);
-    // overloaded attack orders minion i to attack opponent's minion j
-    void attack(int i, int j);
-
-    // play the ith card in the player's hand
-    void play(int i);
-    // overloaded play, plays the ith card on card t owned by player p
-    void play (int i, int p, int t);
-
-    //use ith minion owned by the player
-    void use(int i);
-    //inspect ith minion owned
-    void inspect(int i);
-    //display the hand
-    void hand ();
-    //display the board
-    void board(int i);
-    //subtract HP when hit -> return remaining hp
-    int getHit(int AP);
-
-    // function for turnStart triggers
-    void turnStart();
-    // function for turnEnd triggers
-    void turnEnd();
-    // function for minionPlayed
-    void minionPlayed(std::shared_ptr<Minion> minion);
-    // function for miniondied
-    void minionDied();
-    // the status of the player as of right now
-    void status();
-};
-#endif
 
 
 	//t.initDeck("default.deck",p1);
@@ -314,19 +227,37 @@ public:
              
              
              p1.myBoard->checkDead();
-			p2.myBoard->checkDead();
+	     p2.myBoard->checkDead();
         }
 
         else if (cmd=="use") {
+	    int i, p, t;
+	    string temp;
+	    // check if the second command is actually and int
+            if (iss >> i) {
+	    	// if this doesnt go through, it means its only attacking the player, if it does go through its attacking a target
+                if (iss >> p) {
+                    iss >> temp;
+                    if (temp == "r") {
+			int r = 'r';
+                        turn==1 ? p1.use(i, p, r) : p2.use(i, p, r);
+                    }
+                    else if (stringstream(temp) >> t) {
+                        turn==1 ? p1.use(i, p, t) : p2.use(i, p, t);
+                    } else {
+                        turn==1?p1.use(i):p2.use(i);
+                    }
+                } else {
+                    turn==1?p1.use(i):p2.use(i);
+                }
+            }
 
-            int i;
-            iss >> i;
-            turn==1?p1.use(i):p2.use(i);
-            cout << "use called" << endl << endl;
-            
-            
-            p1.myBoard->checkDead();
-			p2.myBoard->checkDead();
+            // still need to implement the second option of play with i p t
+             // int i,p,t;
+             
+             
+             p1.myBoard->checkDead();
+	     p2.myBoard->checkDead();
         }
 
 
