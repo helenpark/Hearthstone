@@ -3,6 +3,7 @@
 #include <vector>
 #include "ascii_graphics.h"
 using namespace std;
+#include "Minion.h"
 
 string name6 = "Silence";
 int  cost6 = 1;
@@ -19,4 +20,9 @@ std::vector<std::string>  Silence::getAscii(){
 
 void Silence::print() {
     printCard(getAscii());
+}
+
+void Silence::enchant(shared_ptr<Minion> minion) {
+	minion->ability = nullptr;
+	minion->enchants.push_back(shared_from_this());
 }

@@ -6,11 +6,15 @@
 #include <string>
 #include <memory>
 #include "Enchantment.h"
-class MagicFatigue: public Enchantment { //concrete card
+
+class Minion;
+
+class MagicFatigue: public Enchantment, public std::enable_shared_from_this<MagicFatigue> { //concrete card
 
 public:
     MagicFatigue(int p);
     void print() override;
+    void enchant(shared_ptr<Minion> minion);
     std::vector<std::string> getAscii() override;
 };
 #endif

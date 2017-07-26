@@ -7,11 +7,14 @@
 #include "Enchantment.h"
 using namespace std;
 
-class GiantStrength: public Enchantment { //concrete card
+class Minion;
+
+class GiantStrength: public std::enable_shared_from_this<GiantStrength>, public Enchantment { //concrete card
 
 public:
     GiantStrength(int p);
     void print() override;
+    void enchant(shared_ptr<Minion> minion);
     std::vector<std::string> getAscii() override;
 };
 #endif

@@ -194,23 +194,25 @@ void Player::use(int i){
 	if (i < 1 || i > len) {
 		cout << "need to pick a number between 1 and " << len << endl;
 	}
-	if (myBoard->minionSlots[i-1]->ability->name == "Apprentice Summoner") {
-		if (myBoard->minionSlots.size() ==  5) {
-			cout << "Can't summon any more Air Elementals to the board" << endl;
-			return;
+	if (useMagic(myBoard->minionSlots[i-1]->ability->cost)) {
+		if (myBoard->minionSlots[i-1]->ability->name == "Apprentice Summoner") {
+			if (myBoard->minionSlots.size() ==  5) {
+				cout << "Can't summon any more Air Elementals to the board" << endl;
+				return;
+			}
+			myBoard->minionSlots[i-1]->ability->apprenticeSummoner(myBoard);
 		}
-		myBoard->minionSlots[i-1]->ability->apprenticeSummoner(myBoard);
-	}
-	else if (myBoard->minionSlots[i-1]->ability->name == "Master Summoner") {
-		if (myBoard->minionSlots.size() == 5) {
-			cout <<  "Can't summon any more Air Elementals to the board" << endl;
-			return;
+		else if (myBoard->minionSlots[i-1]->ability->name == "Master Summoner") {
+			if (myBoard->minionSlots.size() == 5) {
+				cout <<  "Can't summon any more Air Elementals to the board" << endl;
+				return;
+			}
+			myBoard->minionSlots[i-1]->ability->masterSummoner(myBoard);
+		} else if (myBoard->minionSlots[i-1]->ability->name == "Shield Pierce") {
+			myBoard->minionSlots[i-1]->ability->shieldPierce(opponent, myBoard->minionSlots[i]->AP);
 		}
-		myBoard->minionSlots[i-1]->ability->masterSummoner(myBoard);
-	} else if (myBoard->minionSlots[i-1]->ability->name == "Shield Pierce") {
-		myBoard->minionSlots[i-1]->ability->shieldPierce(opponent, myBoard->minionSlots[i]->AP);
 	} else {
-		cout << "This minion can't use this type of ability" << endl;
+		cout << "Not enough magic to play this card!" << endl;
 	}
 }
 
@@ -225,14 +227,18 @@ void Player::use(int i, Player *p, int t) {
 	if (i < 1 || i > len) {
 		cout << "6 "; 
 		cout << "need to pick a number between 1 and " << len << endl;
-	} else if (myBoard->minionSlots[i-1]->ability->name == "Novice Pyromancer") {
-		if (t == -1) { // target ritual
-			cout << "Novice Pyromancer ability only applies to a minion!" << endl;
-		} else { // target minion
-			myBoard->minionSlots[i-1]->ability->fireElemental(p->myBoard->minionSlots[t-1]); 
-		}
+	} 
+	
+	if (useMagic(myBoard->minionSlots[i-1]->ability->cost)) {
+		if (myBoard->minionSlots[i-1]->ability->name == "Novice Pyromancer") {
+			if (t == -1) { // target ritual
+				cout << "Novice Pyromancer ability only applies to a minion!" << endl;
+			} else { // target minion
+				myBoard->minionSlots[i-1]->ability->fireElemental(p->myBoard->minionSlots[t-1]); 
+			}
+		} 
 	} else {
-		cout << "This minion can't use this type of ability" << endl;
+		cout << "Not enough magic to play this card!" << endl;
 	}
 	
 }

@@ -113,7 +113,7 @@ shared_ptr<Card> Board::top(){
 
 // checks for any dead minions; removes from board and places in graveyeard
 void Board::checkDead() {
-	for (int i=0; i < minionSlots.size(); i++) {
+	for (int i=minionSlots.size()-1; i > -1; i++) {
 		if (minionSlots[i]->DP <= 0) {
 			placeGrave(minionSlots[i]);
 			minionSlots.erase(minionSlots.begin() + i);

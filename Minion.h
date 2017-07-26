@@ -26,6 +26,8 @@ public:
 	int ac; //activation cost for minions that have activated abilities
 	bool original; // used for added ability enchantments
 	std::shared_ptr<Ability> ability;
+	vector<shared_ptr<Enchantment>> enchants;
+	
     // use minion to attack, return true if minion dies after attack, false if minion lives after attack
 	vector<shared_ptr<Minion>> attack(shared_ptr<Minion> minion);
 	// minion attacks the opponent, grab how much the minion can hit for
