@@ -136,7 +136,7 @@ void Player::play(int i) {
 			}
 			else if (type=="Spell") {
 				try {
-					(static_pointer_cast<Spell>(myHand[i-1]))->cast(myBoard,nullptr,opponent->myBoard);
+					(static_pointer_cast<Spell>(myHand[i-1]))->cast(myBoard,0,"",opponent->myBoard);
 					 discard(i);
 				}
 				catch (string msg) {
@@ -153,13 +153,26 @@ void Player::play(int i) {
 }
 
 // overloaded play, plays the ith card on card t owned by player p
-void Player::play (int i, int p, int t) {
+void Player::play (int i, int p, string t) {
 	 if (hasCard(i)) {
 		 // check if you can afford to play
 		 if (useMagic(myHand[i]->cost)) {
-
+            string type = myHand[i-1]->getType();
+			shared_ptr<Card> temp = myHand[i-1];
 			// TODO: implement this!
+			if (type=="Enchantment") {
 
+			}
+            else if (type=="Spell") {
+				try {
+					shared_ptr<Spell> s = (static_pointer_cast<Spell>(myHand[i-1]));
+					s->cast(myBoard,p,t,opponent->myBoard);
+					 discard(i);
+				}
+				catch (string msg) {
+					cout << msg << endl;
+				}
+			}
 
 
 
@@ -218,14 +231,14 @@ void Player::use(int i){
 
 //use ith minions ability on whichever target
 void Player::use(int i, Player *p, int t) {
-	cout << "4 "; 
+	cout << "4 ";
 	int len = myBoard->minionSlots.size();
 	if (len == 0) {
 		cout << "You have no minions in play right now" << endl;
 	}
-	cout << "5 "; 
+	cout << "5 ";
 	if (i < 1 || i > len) {
-		cout << "6 "; 
+		cout << "6 ";
 		cout << "need to pick a number between 1 and " << len << endl;
 	} 
 	
@@ -237,10 +250,11 @@ void Player::use(int i, Player *p, int t) {
 				myBoard->minionSlots[i-1]->ability->fireElemental(p->myBoard->minionSlots[t-1]); 
 			}
 		} 
+
 	} else {
 		cout << "Not enough magic to play this card!" << endl;
 	}
-	
+
 }
 
 //inspect ith minion owned

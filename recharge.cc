@@ -11,7 +11,7 @@ string description9 = "Your ritual gains 3 charges";
 Recharge:: Recharge(int p):Spell{name9, cost9,
                 description9, p}{}
 
-void Recharge::cast(shared_ptr<Board> myBoard,shared_ptr<Card> target, shared_ptr<Board> oppBoard){
+void Recharge::cast(shared_ptr<Board> myBoard,int p,string t, shared_ptr<Board> oppBoard){
     if (!myBoard->myRitual){
         string msg = "You do not have a Ritual to recharge!";
         throw msg;
