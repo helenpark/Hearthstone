@@ -1,5 +1,6 @@
 #include "Board.h"
 #include <memory>
+#include <iostream>
 
 #include "airElemental.h"
 #include "earthElemental.h"
@@ -41,7 +42,9 @@ void Board::placeMinion(shared_ptr<Card> m) {
     int numOfMinions = minionSlots.size();
     if (numOfMinions<5) {
         minionSlots.emplace_back(static_pointer_cast<Minion>(m));
-        cout << "was here line 60 \n";
+
+     //   cout << *minionSlots[temp-1];
+     cout << "was here line 60 \n";
         minionSlots[numOfMinions]->print();
         cout << "The size of the minionSlots is: " << ++numOfMinions <<endl;
     }
@@ -108,10 +111,9 @@ shared_ptr<Card> Board::top(){
         return newMinion;
 }
 
-// checks for any dead minions; removes from board and places in graveyard
+// checks for any dead minions; removes from board and places in graveyeard
 void Board::checkDead() {
-    int len = minionSlots.size();
-	for (int i=0; len; i++) {
+	for (int i=0; i < minionSlots.size(); i++) {
 		if (minionSlots[i]->DP <= 0) {
 			placeGrave(minionSlots[i]);
 			minionSlots.erase(minionSlots.begin() + i);

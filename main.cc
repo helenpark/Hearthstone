@@ -102,7 +102,29 @@ int main(int argc, char *argv[]) {
 
 	//standard input loop
 	bool done = false;
+	
+	// ************** START OF GAME *****************
+	
+	if (!testing) {
+		for (int i=0; i <4; i++) {
+			p1.drawCard();
+			p2.drawCard();
+		}
+	}
+	
+	
+	// display magic remaining to be used
+	cout << "Magic:";
+	for (int i=0; i < curPlayer->ML; i++) {
+		cout << " o";
+	}
+	for (int i=0; i < (curPlayer->MP - curPlayer->ML); i++) {
+		cout << " .";
+	}
+	cout << endl;
+	
 	while (!done){
+		
 		// ************** START OF TURN *****************
 		
 		// RITUALS
@@ -142,12 +164,31 @@ int main(int argc, char *argv[]) {
 			curPlayer->drawCard();
 			//triggered start of turn abilities
 			}
+		
 		curPlayer->turnEnd();
 		curPlayer->status();
 		otherPlayer = players[turn];
 		turn==1?turn=2:turn=1;
 		curPlayer = players[turn];
 		curPlayer->turnStart();
+		
+		// draw a card and gain a magic point
+		if (!testing) {
+			curPlayer->drawCard();
+			curPlayer->MP = curPlayer->MP + 1;
+			curPlayer->ML = curPlayer->MP;
+		}
+		
+		// display magic remaining to be used
+		cout << "Magic:";
+		for (int i=0; i < curPlayer->ML; i++) {
+			cout << " o";
+		}
+		for (int i=0; i < (curPlayer->MP - curPlayer->ML); i++) {
+			cout << " .";
+		}
+		cout << endl;
+		
 		cout << "new turn: "<< turn << endl;
 		}
 
@@ -189,7 +230,6 @@ int main(int argc, char *argv[]) {
 				p2.myBoard->checkDead();
 
 			 } else { // case: attack the other player directly
-				cout << "8" << endl;
 				cout << "attacking player... " << endl;
 				int otherHP = myMinion->attack(otherPlayer);
 				cout << "the other player has " << otherHP << " HP left!" << endl;
@@ -225,20 +265,58 @@ int main(int argc, char *argv[]) {
              // int i,p,t;
              
              
-             p1.myBoard->checkDead();
+            p1.myBoard->checkDead();
 			p2.myBoard->checkDead();
+			
+			// display magic remaining to be used
+			cout << "Magic Remaining:";
+			for (int i=0; i < curPlayer->ML; i++) {
+				cout << " o";
+			}
+			for (int i=0; i < (curPlayer->MP - curPlayer->ML); i++) {
+				cout << " .";
+			}
+			cout << endl;
         }
 
         else if (cmd=="use") {
+	    int i, p, t;
+	    string temp;
+	    // check if the second command is actually and int
+            if (iss >> i) {
+	    	// if this doesnt go through, it means its only attacking the player, if it does go through its attacking a target
+                if (iss >> p) {
+                    iss >> temp;
+                    if (temp == "r") {
+			int r = 'r';
+                        turn==1 ? p1.use(i, p, r) : p2.use(i, p, r);
+                    }
+                    else if (stringstream(temp) >> t) {
+                        turn==1 ? p1.use(i, p, t) : p2.use(i, p, t);
+                    } else {
+                        turn==1?p1.use(i):p2.use(i);
+                    }
+                } else {
+                    turn==1?p1.use(i):p2.use(i);
+                }
+            }
 
-            int i;
             iss >> i;
-            turn==1?p1.use(i):p2.use(i);
-            cout << "use called" << endl << endl;
-            
+            turn==1?p1.use(i):p2.use(i);            
             
             p1.myBoard->checkDead();
 			p2.myBoard->checkDead();
+			
+			// display magic remaining to be used
+			cout << "Magic Remaining:";
+			for (int i=0; i < curPlayer->ML; i++) {
+				cout << " o";
+			}
+			for (int i=0; i < (curPlayer->MP - curPlayer->ML); i++) {
+				cout << " .";
+			}
+			cout << endl;
+			
         }
 
 
@@ -246,12 +324,10 @@ int main(int argc, char *argv[]) {
             int i;
             iss >> i;
             turn==1?p1.inspect(i):p2.inspect(i);
-            cout << "inspect called" << endl << endl;
         }
 
         else if (cmd=="hand") {
             turn==1?p1.hand():p2.hand();
-            cout << "hand called" << endl << endl;
         }
 
         else if (cmd=="board"){
@@ -260,7 +336,6 @@ int main(int argc, char *argv[]) {
             print (CENTRE_GRAPHIC);
             cout << endl;
             p2.board(2);
-            cout << "board called" << endl << endl;
         }
 	}
 }

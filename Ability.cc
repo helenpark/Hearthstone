@@ -11,6 +11,15 @@
 using namespace std;
 
 Ability::Ability(string name, int cost): name(name), cost(cost) {
+	if (name == "Shield Pierce") {
+		description = "Minion directly attacks the opponent for half of the minion's attack";
+	}
+	if (name == "Air Elemental") {
+		description = "";
+	}
+	if (name == "Earth Elemental") {
+		description = "";
+	}
 	if (name == "Fire Elemental") {
 		description = "Whenever an opponent's minion enters play, deal 1 damage to it.";
 	} 
@@ -27,6 +36,8 @@ Ability::Ability(string name, int cost): name(name), cost(cost) {
 		description = "Summon up to three 1/1 air elementals";
 	}
 }
+
+
 
 void Ability::fireElemental(shared_ptr<Minion> minion) {
 	cout << "Fire Elemental ability used on " << minion->getName() << endl;

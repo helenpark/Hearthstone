@@ -28,7 +28,8 @@ public:
     vector<shared_ptr<Card>> myHand; //5 cards
     vector<shared_ptr<Card>> played;
     int HP = 20;  //20 lives
-    int MP = 3;   //3 magics
+    int MP = 3;   //2 magics
+    int ML = MP;   //magic left
 
     Player();
 	Player(std::string name, int n);
@@ -65,6 +66,8 @@ public:
 
     //use ith minion owned by the player
     void use(int i);
+    //use ith minions ability on whichever target
+    void use(int i, int p, int t);
     //inspect ith minion owned
     void inspect(int i);
     //display the hand
@@ -82,10 +85,13 @@ public:
     void minionPlayed(std::shared_ptr<Minion> minion);
     // function for miniondied
     void minionDied();
+    
     // the status of the player as of right now
     void status();
     // win Game -> output game won messages
-    void winGame();
+    void winGame(); 
+    // use magic (when playing minion or other cards)
+    bool useMagic(int cost);
 };
 #endif
 

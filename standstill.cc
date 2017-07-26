@@ -28,7 +28,6 @@ void Standstill::activate(Player *player, shared_ptr<Board> board, shared_ptr<Mi
 	for (int i = 0; i < len; i++) {
 		if (minion == board->minionSlots[i]) {
 			board->placeGrave(board->minionSlots[i]);
-			cout << "Success" << endl << endl;
 			board->minionSlots.erase(board->minionSlots.begin() + i);
 		}
 	}
