@@ -19,7 +19,8 @@ public:
 	// shuffle deck, randomize order of cards
     std::vector<Card*>  shuffle();
 
-
+    //readd
+    void readd();
 */
     // whether deck contains any cards or not
     bool isEmpty();
